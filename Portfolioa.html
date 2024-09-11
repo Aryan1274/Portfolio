@@ -1,0 +1,112 @@
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home page</title>
+    <style>
+        body {
+            background-color: #1f1f1f;
+            color: #fff;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: ;
+            padding: 20px;
+            text-align: center;
+            background-image: url('starry-night-sky-over-a-river-92a8ngoxc7yvj8tb.webp');
+        }
+        nav {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            padding: 10px 20px;
+        }
+        nav a:hover {
+            background-color: #333;
+        }
+        .container {
+            max-width: 960px;
+            margin: 20px auto;
+            padding: 0 20px;
+        }
+        .portfolio-item {
+            background-color: #333;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .portfolio-item h2 {
+            margin-top: 0;
+        }
+        .portfolio-item p {
+            margin-bottom: 0;
+        }
+        hr {
+          border-color:cyan;
+          padding: 0;
+          border-radius: 50%;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Home</h1>
+    </header>
+    <hr>
+    <nav>
+        <a href="Portfolioa.html">Home</a>
+        <a href="folio.html">Portfolio</a>
+        <a href="About.html">About</a>
+        <a href="contact.html">Contact</a>
+    </nav>
+    <hr>
+    <div class="container">
+        <div class="portfolio-item">
+            <h2>Project 1.</h2>
+            <p>
+              <b>In Python<b><br>
+              import random<br>
+import time<br>
+import colorama<br>
+from colorama import Fore,Back,Style<br>
+my_str=""<br>
+str=input(Fore.GREEN+'enter your sentance or numbers:')<br>
+char=['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s',<br>'t','u','v','w','x','y','z',' ','1','2','3','4','5','6','7','8','9','0']<br>
+for i in str:<br>
+  while True:<br>
+    ch=random.choice(char)<br>
+    print(Fore.RED + my_str+ch)<br>
+    time.sleep(0.02)<br>
+    if ch!=i:<br>
+      pass<br>
+    else:<br>
+      my_str+=ch<br>
+      break<br>
+            </p>
+        </div>
+        <hr>
+        <div class="portfolio-item">
+            <h2>Project 2.<br></h2>
+            <p>In Python<br>import time<br>
+d=[]<br>
+for i in range (3):<br>
+  d.append(int(input('enter number:')))<br>
+
+print(d)<br>
+
+for x in range(3):<br>
+  for y in range(3):<br>
+    for z in range(3):<br>
+      if(all((x!=y,y!=z,z!=x))):<br>
+        time.sleep(0.3)<br>
+        print(d[x],d[y],d[z])<br>
+</p>
+        </div>
+        <hr>
+    </div>
+</body>
+</html>
