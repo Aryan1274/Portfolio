@@ -47,7 +47,7 @@ const Hero = () => {
     <section 
       id="home" 
       ref={containerRef}
-      className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden pt-32 pb-20 px-6"
+      className="section-wrapper min-h-screen flex flex-col items-center justify-center overflow-hidden"
     >
       {/* Background Animated Blobs */}
       <div className="absolute inset-0 z-0">

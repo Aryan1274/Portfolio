@@ -18,9 +18,9 @@ const About = () => {
   ];
 
   return (
-    <section id="about" className="py-[180px] bg-surface relative overflow-hidden my-32">
-      <div className="container mx-auto px-12 lg:px-24">
-        <div className="flex flex-col lg:flex-row gap-[100px] items-center">
+    <section id="about" className="section-wrapper bg-surface overflow-hidden">
+      <div className="section-container">
+        <div className="flex flex-col lg:flex-row gap-24 items-center">
           {/* Image Side */}
           <motion.div 
             {...fadeIn}

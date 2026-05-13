@@ -42,9 +42,9 @@ const Skills = () => {
   };
 
   return (
-    <section id="skills" className="py-[180px] bg-background relative my-32 overflow-hidden">
-      <div className="container mx-auto px-12 lg:px-24">
-        <div className="text-center mb-[140px]">
+    <section id="skills" className="section-wrapper bg-background">
+      <div className="section-container">
+        <div className="section-header mx-auto text-center">
           <motion.h2 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}

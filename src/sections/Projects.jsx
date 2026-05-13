@@ -31,9 +31,9 @@ const Projects = () => {
   ];
 
   return (
-    <section id="projects" className="py-[180px] bg-surface relative my-32 overflow-hidden">
-      <div className="container mx-auto px-12 lg:px-24">
-        <div className="flex flex-col md:flex-row justify-between items-end mb-[140px] gap-12">
+    <section id="projects" className="section-wrapper bg-surface">
+      <div className="section-container">
+        <div className="section-header">
           <div className="max-w-xl">
             <motion.h2 
               initial={{ opacity: 0, x: -20 }}

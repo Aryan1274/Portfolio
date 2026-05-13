@@ -4,13 +4,10 @@ import { Send, Mail, Phone, MapPin } from 'lucide-react';
 
 const Contact = () => {
   return (
-    <section id="contact" className="py-[180px] bg-background relative overflow-hidden my-32">
-      {/* Background Glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-purple-600/10 rounded-full blur-[120px] pointer-events-none"></div>
-
-      <div className="container mx-auto px-12 lg:px-24 relative z-10">
+    <section id="contact" className="section-wrapper bg-background overflow-hidden">
+      <div className="section-container relative z-10">
         <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-[140px]">
+          <div className="section-header mx-auto text-center">
             <motion.h2 
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
