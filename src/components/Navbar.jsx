@@ -35,17 +35,19 @@ const Navbar = () => {
         </a>
 
         {/* Desktop Menu */}
-        <div className="hidden md:flex items-center space-x-8">
-          {navLinks.map((link) => (
-            <a
-              key={link.name}
-              href={link.href}
-              className="text-sm font-medium text-gray-300 hover:text-white transition-colors duration-200"
-            >
-              {link.name}
-            </a>
-          ))}
-          <div className="flex items-center space-x-4 ml-4">
+        <div className="hidden md:flex items-center gap-12">
+          <div className="flex items-center gap-8">
+            {navLinks.map((link) => (
+              <a
+                key={link.name}
+                href={link.href}
+                className="text-sm font-semibold text-gray-300 hover:text-white transition-all duration-300 tracking-widest uppercase"
+              >
+                {link.name}
+              </a>
+            ))}
+          </div>
+          <div className="flex items-center gap-6 border-l border-white/20 pl-10">
             <a href="#" className="text-gray-400 hover:text-white transition-colors">
               <Code size={20} />
             </a>

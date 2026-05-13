@@ -47,23 +47,19 @@ const Hero = () => {
     <section 
       id="home" 
       ref={containerRef}
-      className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20"
+      className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden pt-32 pb-20 px-6"
     >
       {/* Background Animated Blobs */}
       <div className="absolute inset-0 z-0">
         <motion.div 
           style={{ x: layer1X, y: layer1Y }}
-          animate={{
-            scale: [1, 1.2, 1],
-          }}
+          animate={{ scale: [1, 1.2, 1] }}
           transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
           className="absolute top-1/4 left-1/4 w-96 h-96 bg-purple-600/20 rounded-full blur-[120px]"
         />
         <motion.div 
           style={{ x: layer2X, y: layer2Y }}
-          animate={{
-            scale: [1, 1.3, 1],
-          }}
+          animate={{ scale: [1, 1.3, 1] }}
           transition={{ duration: 12, repeat: Infinity, ease: "easeInOut", delay: 1 }}
           className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-cyan-600/20 rounded-full blur-[120px]"
         />
@@ -77,36 +73,35 @@ const Hero = () => {
             key={i}
             initial={{ opacity: 0 }}
             animate={{ 
-              opacity: [0.2, 0.5, 0.2],
-              y: [0, -20, 0],
-              x: [0, 10, 0]
+              opacity: [0.1, 0.3, 0.1],
+              y: [0, -40, 0],
             }}
             style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
+              left: `${10 + Math.random() * 80}%`,
+              top: `${10 + Math.random() * 80}%`,
               x: i % 2 === 0 ? layer2X : layer3X,
               y: i % 2 === 0 ? layer2Y : layer3Y,
             }}
             transition={{ 
-              duration: 5 + Math.random() * 5, 
+              duration: 8 + Math.random() * 4, 
               repeat: Infinity,
               delay: Math.random() * 5
             }}
-            className="absolute p-4 glass rounded-xl border border-white/5"
+            className="absolute px-4 py-2 glass rounded-full border border-white/5"
           >
-            <div className="text-[10px] font-mono text-purple-400 opacity-40">
+            <div className="text-[10px] font-mono text-purple-400/60 font-bold tracking-widest uppercase">
               {['<div>', 'const', '=>', 'import', 'render', 'async'][i]}
             </div>
           </motion.div>
         ))}
       </div>
 
-      <div className="container mx-auto px-6 z-10 flex flex-col items-center text-center">
+      <div className="container mx-auto z-10 flex flex-col items-center text-center">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="mb-6 px-4 py-1 glass rounded-full text-sm font-medium text-purple-400 border border-purple-500/20 inline-block"
+          className="mb-8 px-6 py-2 glass rounded-full text-xs font-bold uppercase tracking-[0.3em] text-purple-400 border border-purple-500/20 inline-block shadow-lg shadow-purple-500/10"
         >
           Available for new opportunities
         </motion.div>
@@ -115,16 +110,16 @@ const Hero = () => {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="text-6xl md:text-8xl font-bold tracking-tighter mb-6 leading-tight"
+          className="text-7xl md:text-9xl font-black tracking-tighter mb-8 leading-[0.9]"
         >
           I'm <span className="text-gradient">Aryan</span> <br />
-          <div className="h-20 md:h-28 overflow-hidden inline-flex items-center">
+          <div className="h-24 md:h-32 overflow-hidden inline-flex items-center">
             <motion.span
               key={roleIndex}
-              initial={{ y: 50, opacity: 0 }}
+              initial={{ y: 80, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
-              exit={{ y: -50, opacity: 0 }}
-              transition={{ duration: 0.5 }}
+              exit={{ y: -80, opacity: 0 }}
+              transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
               className="text-white"
             >
               {roles[roleIndex]}
@@ -136,69 +131,73 @@ const Hero = () => {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.4 }}
-          className="text-gray-400 text-lg md:text-xl max-w-2xl mx-auto mb-10"
+          className="text-gray-400 text-lg md:text-2xl max-w-3xl mx-auto mt-[60px] mb-[120px] leading-relaxed px-10"
         >
           Crafting digital experiences that merge cutting-edge technology with premium design aesthetics. 
           Specializing in high-performance web applications and immersive animations.
         </motion.p>
 
-        <motion.div 
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.6 }}
-          className="flex flex-col sm:flex-row items-center justify-center gap-4"
-        >
-          <a 
-            href="#projects" 
-            className="group px-8 py-4 bg-white text-black font-bold rounded-full hover:bg-gray-200 transition-all duration-300 flex items-center gap-2"
+        <div className="flex flex-col items-center gap-[100px] mb-[150px]">
+          <motion.div 
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.6 }}
+            className="flex flex-col sm:flex-row items-center justify-center gap-6"
           >
-            View Projects
-            <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
-          </a>
-          <a 
-            href="#contact" 
-            className="px-8 py-4 glass text-white font-bold rounded-full hover:bg-white/10 transition-all duration-300"
-          >
-            Contact Me
-          </a>
-        </motion.div>
-
-        {/* Floating Social Cards */}
-        <div className="mt-16 flex gap-6">
-          {[
-            { Icon: Code, href: '#', label: 'GitHub' },
-            { Icon: User, href: '#', label: 'LinkedIn' },
-            { Icon: Share2, href: '#', label: 'Twitter' }
-          ].map((social, index) => (
-            <motion.a
-              key={index}
-              href={social.href}
-              initial={{ opacity: 0, scale: 0.5 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.5, delay: 0.8 + index * 0.1 }}
-              whileHover={{ 
-                y: -10, 
-                rotateX: 15, 
-                rotateY: 15,
-                boxShadow: "0 20px 40px rgba(139, 92, 246, 0.3)"
-              }}
-              className="w-12 h-12 glass rounded-2xl flex items-center justify-center text-gray-400 hover:text-white hover:border-purple-500/50 transition-all perspective-1000"
+            <a 
+              href="#projects" 
+              className="group px-10 py-5 bg-white text-black font-bold rounded-2xl hover:scale-105 transition-all duration-300 flex items-center gap-3 shadow-2xl shadow-white/10"
             >
-              <social.Icon size={20} />
-            </motion.a>
-          ))}
+              View Projects
+              <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
+            </a>
+            <a 
+              href="#contact" 
+              className="px-10 py-5 glass text-white font-bold rounded-2xl hover:bg-white/10 hover:scale-105 transition-all duration-300 shadow-xl"
+            >
+              Contact Me
+            </a>
+          </motion.div>
+
+          {/* Social Links Area */}
+          <div className="flex flex-col items-center gap-8">
+            <div className="flex gap-6">
+              {[
+                { Icon: Code, href: '#', label: 'GitHub' },
+                { Icon: User, href: '#', label: 'LinkedIn' },
+                { Icon: Share2, href: '#', label: 'Twitter' }
+              ].map((social, index) => (
+                <motion.a
+                  key={index}
+                  href={social.href}
+                  initial={{ opacity: 0, scale: 0.5 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.5, delay: 0.8 + index * 0.1 }}
+                  whileHover={{ 
+                    y: -10, 
+                    rotateX: 15, 
+                    rotateY: 15,
+                    boxShadow: "0 20px 40px rgba(139, 92, 246, 0.3)"
+                  }}
+                  className="w-14 h-14 glass rounded-2xl flex items-center justify-center text-gray-400 hover:text-white hover:border-purple-500/50 transition-all perspective-1000"
+                >
+                  <social.Icon size={24} />
+                </motion.a>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
 
-      {/* Scroll Down Indicator */}
+      {/* Scroll Down Indicator - Pushed Down to Bottom */}
       <motion.div 
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 2 }}
-        className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
+        className="absolute bottom-24 left-1/2 -translate-x-1/2 flex flex-col items-center gap-6 pointer-events-none"
       >
-        <span className="text-[10px] uppercase tracking-widest text-gray-500 font-bold">Scroll</span>
-        <div className="w-[1px] h-12 bg-gradient-to-b from-purple-500 to-transparent"></div>
+        <span className="text-xs uppercase tracking-[0.5em] text-gray-600 font-black">Scroll</span>
+        <div className="w-[1px] h-24 bg-gradient-to-b from-purple-500/50 to-transparent"></div>
       </motion.div>
     </section>
   );

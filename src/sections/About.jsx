@@ -18,9 +18,9 @@ const About = () => {
   ];
 
   return (
-    <section id="about" className="py-24 bg-surface relative overflow-hidden">
-      <div className="container mx-auto px-6">
-        <div className="flex flex-col lg:flex-row gap-16 items-center">
+    <section id="about" className="py-[180px] bg-surface relative overflow-hidden my-32">
+      <div className="container mx-auto px-12 lg:px-24">
+        <div className="flex flex-col lg:flex-row gap-[100px] items-center">
           {/* Image Side */}
           <motion.div 
             {...fadeIn}
@@ -57,10 +57,10 @@ const About = () => {
           {/* Text Side */}
           <div className="lg:w-1/2">
             <motion.div {...fadeIn}>
-              <h2 className="text-4xl md:text-5xl font-bold mb-6">
+              <h2 className="text-5xl md:text-7xl font-bold mb-12 tracking-tighter">
                 Passionate about <span className="text-gradient">Innovation</span>
               </h2>
-              <p className="text-gray-400 text-lg mb-8 leading-relaxed">
+              <p className="text-gray-400 text-lg md:text-xl mb-12 leading-relaxed max-w-2xl">
                 I am a creative developer based in India, dedicated to building high-end digital solutions that push the boundaries of the web. With a strong foundation in both design and engineering, I create products that are not only functional but also visually stunning.
               </p>
               

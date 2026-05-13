@@ -50,15 +50,17 @@ body {
 }
 
 .glass-morphism {
-  background: rgba(22, 22, 22, 0.7);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  @apply bg-background/80 backdrop-blur-xl border-b border-white/5;
+}
+
+/* Global Section Styles */
+section {
+  position: relative;
 }
 
 /* Gradient Text */
 .text-gradient {
-  background: linear-gradient(to right, var(--color-accent-purple), var(--color-accent-cyan));
+  background: linear-gradient(to right, #a855f7, #06b6d4, #3b82f6);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;

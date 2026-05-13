@@ -66,7 +66,7 @@ function App() {
         <Contact />
       </main>
 
-      <footer className="py-16 bg-surface relative overflow-hidden">
+      <footer className="py-24 bg-surface relative overflow-hidden">
         <div className="container mx-auto px-6 text-center relative z-10">
           <h2 className="text-2xl font-bold text-gradient mb-4">ANTIGRAVITY</h2>
           <p className="text-gray-500 mb-8 max-w-md mx-auto">

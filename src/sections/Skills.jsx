@@ -42,9 +42,9 @@ const Skills = () => {
   };
 
   return (
-    <section id="skills" className="py-24 bg-background relative">
-      <div className="container mx-auto px-6">
-        <div className="text-center mb-16">
+    <section id="skills" className="py-[180px] bg-background relative my-32 overflow-hidden">
+      <div className="container mx-auto px-12 lg:px-24">
+        <div className="text-center mb-[140px]">
           <motion.h2 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -69,7 +69,7 @@ const Skills = () => {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12"
         >
           {skillCategories.map((category, index) => (
             <motion.div
@@ -77,8 +77,8 @@ const Skills = () => {
               variants={itemVariants}
               className="p-8 bg-card rounded-3xl border border-white/5 hover:border-purple-500/30 transition-all duration-300 relative group overflow-hidden"
             >
-              <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
-                <category.icon size={80} />
+              <div className="absolute top-0 right-0 p-4 opacity-[0.03] group-hover:opacity-[0.08] transition-opacity pointer-events-none">
+                <category.icon size={120} />
               </div>
               
               <div className="flex items-center gap-4 mb-6">
