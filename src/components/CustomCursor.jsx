@@ -29,6 +29,7 @@ const CustomCursor = () => {
 
     const onMouseEnterLink = () => {
       setIsHovering(true);
+      dot.style.opacity = '0';
       dot.style.transform += ' scale(0)';
     };
 
@@ -37,7 +38,7 @@ const CustomCursor = () => {
       dot.style.opacity = '1';
     };
 
-    const interactables = document.querySelectorAll('a, button, [data-hover]');
+    const interactables = document.querySelectorAll('a, button, input, textarea, [data-hover]');
     interactables.forEach(el => {
       el.addEventListener('mouseenter', onMouseEnterLink);
       el.addEventListener('mouseleave', onMouseLeaveLink);
@@ -65,3 +66,4 @@ const CustomCursor = () => {
 };
 
 export default CustomCursor;
+

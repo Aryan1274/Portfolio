@@ -66,26 +66,33 @@ function App() {
         <Contact />
       </main>
 
-      <footer className="py-24 bg-surface relative overflow-hidden">
-        <div className="container mx-auto px-6 text-center relative z-10">
-          <h2 className="text-2xl font-bold text-gradient mb-4">ANTIGRAVITY</h2>
-          <p className="text-gray-500 mb-8 max-w-md mx-auto">
-            Built with React, Vite, Framer Motion, and GSAP. 
-            Designed for the next generation of the web.
+      <footer style={{ padding: '5rem 0 3rem', background: 'var(--bg-secondary)', position: 'relative', overflow: 'hidden' }}>
+        {/* Top glow line */}
+        <div style={{ position: 'absolute', top: 0, left: '50%', transform: 'translateX(-50%)', width: '100%', height: '1px', background: 'linear-gradient(90deg, transparent, rgba(0,240,255,0.3), transparent)' }} />
+
+        <div style={{ maxWidth: '1400px', margin: '0 auto', padding: '0 clamp(1.5rem,5vw,6rem)', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', gap: '2rem' }}>
+          {/* Logo */}
+          <span style={{ fontFamily: "'Space Grotesk',sans-serif", fontWeight: 800, fontSize: '1.4rem', letterSpacing: '0.12em', textTransform: 'uppercase', background: 'linear-gradient(135deg,#00f0ff,#9b5de5)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>Aryan</span>
+
+          <p style={{ color: 'rgba(255,255,255,0.25)', fontSize: '0.85rem', lineHeight: 1.7, maxWidth: '380px' }}>
+            Built with React, Vite &amp; Framer Motion.
+            Crafted for the next generation of the web.
           </p>
-          <div className="flex justify-center gap-6 mb-8 text-gray-400">
-            <a href="#" className="hover:text-white transition-colors">GitHub</a>
-            <a href="#" className="hover:text-white transition-colors">LinkedIn</a>
-            <a href="#" className="hover:text-white transition-colors">Twitter</a>
-            <a href="#" className="hover:text-white transition-colors">Dribbble</a>
+
+          <div style={{ display: 'flex', gap: '2rem', flexWrap: 'wrap', justifyContent: 'center' }}>
+            {['GitHub','LinkedIn','Twitter','Dribbble'].map(link => (
+              <a key={link} href="#" style={{ color: 'rgba(255,255,255,0.25)', fontSize: '0.75rem', fontWeight: 500, letterSpacing: '0.08em', textDecoration: 'none', transition: 'color 0.3s ease', cursor: 'none' }}
+                onMouseEnter={e => e.target.style.color = '#00f0ff'}
+                onMouseLeave={e => e.target.style.color = 'rgba(255,255,255,0.25)'}>
+                {link}
+              </a>
+            ))}
           </div>
-          <p className="text-xs text-gray-600 uppercase tracking-widest">
-            © 2026 AntiGravity Portfolio. All rights reserved.
+
+          <p style={{ fontSize: '0.65rem', color: 'rgba(255,255,255,0.12)', letterSpacing: '0.2em', textTransform: 'uppercase' }}>
+            &copy; 2026 Aryan. All rights reserved.
           </p>
         </div>
-        
-        {/* Subtle Footer Glow */}
-        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-full h-px bg-gradient-to-r from-transparent via-purple-500/50 to-transparent"></div>
       </footer>
     </div>
   );

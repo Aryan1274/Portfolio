@@ -1,5 +1,5 @@
-@import "tailwindcss";
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+@import "tailwindcss";
 
 /* ============================================
    ANTIGRAVITY — MASTER DESIGN SYSTEM
@@ -441,3 +441,81 @@ html.lenis { height: auto; }
    ============================================ */
 a { cursor: none; }
 button { cursor: none; }
+
+/* ============================================
+   SHIMMER SWEEP — Project & Blog Cards
+   ============================================ */
+.project-shimmer,
+.blog-shimmer {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+  border-radius: inherit;
+}
+
+.project-shimmer::after,
+.blog-shimmer::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(
+    105deg,
+    transparent 40%,
+    rgba(255, 255, 255, 0.04) 50%,
+    transparent 60%
+  );
+  transform: skewX(-15deg);
+  transition: none;
+  opacity: 0;
+}
+
+.card:hover .project-shimmer::after,
+.card:hover .blog-shimmer::after {
+  animation: shimmer-sweep 0.7s ease forwards;
+}
+
+@keyframes shimmer-sweep {
+  0%   { left: -100%; opacity: 1; }
+  100% { left: 160%;  opacity: 1; }
+}
+
+/* ============================================
+   FLOATING KEYFRAME (CSS fallback)
+   ============================================ */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-14px); }
+}
+
+.float-anim {
+  animation: float 4s ease-in-out infinite;
+}
+
+/* ============================================
+   SCROLL REVEAL UTILITY
+   ============================================ */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s cubic-bezier(0.22,1,0.36,1), transform 0.8s cubic-bezier(0.22,1,0.36,1);
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ============================================
+   GLASS UTILITY
+   ============================================ */
+.glass {
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
