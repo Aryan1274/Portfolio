@@ -1,105 +1,141 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, User, Code, Share2 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
+const navLinks = [
+  { label: 'Home', href: '#home' },
+  { label: 'About', href: '#about' },
+  { label: 'Skills', href: '#skills' },
+  { label: 'Projects', href: '#projects' },
+  { label: 'Blog', href: '#blog' },
+  { label: 'Contact', href: '#contact' },
+];
+
 const Navbar = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    const onScroll = () => setScrolled(window.scrollY > 40);
+    window.addEventListener('scroll', onScroll);
+    return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  const navLinks = [
-    { name: 'Home', href: '#home' },
-    { name: 'About', href: '#about' },
-    { name: 'Skills', href: '#skills' },
-    { name: 'Projects', href: '#projects' },
-    { name: 'Blog', href: '#blog' },
-    { name: 'Contact', href: '#contact' },
-  ];
-
   return (
-    <nav
-      className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
-        scrolled ? 'py-4 glass-morphism' : 'py-6 bg-transparent'
-      }`}
-    >
-      <div className="container mx-auto px-6 flex justify-between items-center">
-        <a href="#home" className="text-2xl font-bold tracking-tighter text-gradient">
-          ANTIGRAVITY
+    <>
+      {/* Top Bar */}
+      <motion.header
+        initial={{ y: -80, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+        style={{
+          position: 'fixed', top: 0, left: 0, right: 0, zIndex: 500,
+          padding: '1.5rem clamp(1.5rem, 5vw, 6rem)',
+          display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+          backdropFilter: scrolled ? 'blur(20px)' : 'none',
+          borderBottom: scrolled ? '1px solid rgba(255,255,255,0.04)' : 'none',
+          background: scrolled ? 'rgba(3,3,3,0.8)' : 'transparent',
+          transition: 'all 0.4s ease',
+        }}
+      >
+        {/* Logo */}
+        <a href="#home" style={{ textDecoration: 'none', cursor: 'none' }}>
+          <span style={{
+            fontFamily: "'Space Grotesk', sans-serif",
+            fontWeight: 800,
+            fontSize: '1.1rem',
+            letterSpacing: '0.15em',
+            textTransform: 'uppercase',
+            background: 'linear-gradient(135deg, #00f0ff, #9b5de5)',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+            backgroundClip: 'text',
+          }}>
+            Aryan
+          </span>
         </a>
 
-        {/* Desktop Menu */}
-        <div className="hidden md:flex items-center gap-12">
-          <div className="flex items-center gap-8">
-            {navLinks.map((link) => (
-              <a
-                key={link.name}
-                href={link.href}
-                className="text-sm font-semibold text-gray-300 hover:text-white transition-all duration-300 tracking-widest uppercase"
-              >
-                {link.name}
-              </a>
-            ))}
-          </div>
-          <div className="flex items-center gap-6 border-l border-white/20 pl-10">
-            <a href="#" className="text-gray-400 hover:text-white transition-colors">
-              <Code size={20} />
+        {/* Desktop Nav */}
+        <nav style={{ display: 'flex', gap: '2.5rem', alignItems: 'center' }}>
+          {navLinks.map((link) => (
+            <a
+              key={link.label}
+              href={link.href}
+              style={{
+                color: 'rgba(255,255,255,0.4)',
+                textDecoration: 'none',
+                fontSize: '0.75rem',
+                fontWeight: 500,
+                letterSpacing: '0.12em',
+                textTransform: 'uppercase',
+                transition: 'color 0.3s ease',
+                cursor: 'none',
+              }}
+              onMouseEnter={e => e.target.style.color = '#00f0ff'}
+              onMouseLeave={e => e.target.style.color = 'rgba(255,255,255,0.4)'}
+            >
+              {link.label}
             </a>
-            <a href="#" className="text-gray-400 hover:text-white transition-colors">
-              <User size={20} />
-            </a>
-          </div>
-        </div>
-
-        {/* Mobile Menu Toggle */}
-        <button
-          className="md:hidden text-white focus:outline-none"
-          onClick={() => setIsOpen(!isOpen)}
-        >
-          {isOpen ? <X size={28} /> : <Menu size={28} />}
-        </button>
-      </div>
-
-      {/* Mobile Menu Drawer */}
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            className="absolute top-full left-0 w-full glass-morphism py-8 px-6 md:hidden flex flex-col space-y-6"
+          ))}
+          <a
+            href="#contact"
+            style={{
+              display: 'inline-flex', alignItems: 'center', gap: '0.5rem',
+              padding: '0.6rem 1.5rem',
+              border: '1px solid rgba(0, 240, 255, 0.3)',
+              borderRadius: '100px',
+              color: '#00f0ff',
+              textDecoration: 'none',
+              fontSize: '0.75rem',
+              fontWeight: 600,
+              letterSpacing: '0.1em',
+              textTransform: 'uppercase',
+              transition: 'all 0.3s ease',
+              cursor: 'none',
+            }}
+            onMouseEnter={e => { e.target.style.background = '#00f0ff'; e.target.style.color = '#000'; }}
+            onMouseLeave={e => { e.target.style.background = 'transparent'; e.target.style.color = '#00f0ff'; }}
           >
-            {navLinks.map((link) => (
-              <a
-                key={link.name}
-                href={link.href}
-                className="text-lg font-medium text-gray-300 hover:text-white"
-                onClick={() => setIsOpen(false)}
-              >
-                {link.name}
-              </a>
-            ))}
-            <div className="flex items-center space-x-6 pt-4 border-t border-white/10">
-              <a href="#" className="text-gray-400 hover:text-white">
-                <Code size={24} />
-              </a>
-              <a href="#" className="text-gray-400 hover:text-white">
-                <User size={24} />
-              </a>
-              <a href="#" className="text-gray-400 hover:text-white">
-                <Share2 size={24} />
-              </a>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </nav>
+            Hire Me
+          </a>
+        </nav>
+      </motion.header>
+
+      {/* Side Nav Dots */}
+      <SideNavDots />
+    </>
+  );
+};
+
+const SideNavDots = () => {
+  const [active, setActive] = useState('home');
+  const sections = ['home', 'about', 'skills', 'projects', 'blog', 'contact'];
+
+  useEffect(() => {
+    const observers = sections.map((id) => {
+      const el = document.getElementById(id);
+      if (!el) return null;
+      const obs = new IntersectionObserver(
+        ([entry]) => { if (entry.isIntersecting) setActive(id); },
+        { threshold: 0.5 }
+      );
+      obs.observe(el);
+      return obs;
+    });
+    return () => observers.forEach(obs => obs?.disconnect());
+  }, []);
+
+  return (
+    <div className="side-nav" style={{ display: 'none' }}>
+      {sections.map((id) => (
+        <a
+          key={id}
+          href={`#${id}`}
+          className={`side-nav-dot ${active === id ? 'active' : ''}`}
+          title={id}
+          style={{ cursor: 'none' }}
+        />
+      ))}
+    </div>
   );
 };
 

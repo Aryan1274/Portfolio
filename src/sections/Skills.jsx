@@ -1,109 +1,187 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { Code, Layout, Settings, Terminal, Database, Cpu } from 'lucide-react';
+import React, { useRef } from 'react';
+import { motion, useInView } from 'framer-motion';
 
-const Skills = () => {
-  const skillCategories = [
-    {
-      title: 'Frontend',
-      icon: Code,
-      skills: ['React', 'Next.js', 'Tailwind', 'Framer Motion', 'GSAP', 'TypeScript']
-    },
-    {
-      title: 'UI/UX Design',
-      icon: Layout,
-      skills: ['Figma', 'Adobe XD', 'Prototyping', 'User Research', 'Typography']
-    },
-    {
-      title: 'Tools & DevOps',
-      icon: Settings,
-      skills: ['Git', 'Docker', 'Vercel', 'Netlify', 'Postman', 'Sass']
-    },
-    {
-      title: 'Backend',
-      icon: Database,
-      skills: ['Node.js', 'Express', 'MongoDB', 'PostgreSQL', 'Firebase', 'Prisma']
-    }
-  ];
+const skills = [
+  { name: 'React / Next.js', level: 90, cat: 'Frontend' },
+  { name: 'JavaScript / TypeScript', level: 85, cat: 'Frontend' },
+  { name: 'UI/UX Design (Figma)', level: 88, cat: 'Design' },
+  { name: 'Tailwind CSS / SCSS', level: 92, cat: 'Frontend' },
+  { name: 'Node.js / Express', level: 75, cat: 'Backend' },
+  { name: 'Framer Motion / GSAP', level: 80, cat: 'Animation' },
+  { name: 'MongoDB / PostgreSQL', level: 70, cat: 'Backend' },
+  { name: 'Three.js / WebGL', level: 65, cat: 'Creative' },
+];
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1
-      }
-    }
-  };
+const techStack = [
+  'React', 'Next.js', 'TypeScript', 'Tailwind', 'Node.js',
+  'Figma', 'GSAP', 'Three.js', 'MongoDB', 'PostgreSQL',
+];
 
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0 }
-  };
+const SkillBar = ({ name, level, cat, i }) => {
+  const ref = useRef(null);
+  const inView = useInView(ref, { once: true, margin: '-100px' });
 
   return (
-    <section id="skills" className="section-wrapper bg-background">
-      <div className="section-container">
-        <div className="section-header mx-auto text-center">
-          <motion.h2 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-4xl md:text-5xl font-bold mb-4"
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, x: -30 }}
+      animate={inView ? { opacity: 1, x: 0 } : {}}
+      transition={{ duration: 0.6, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] }}
+      style={{
+        padding: '1.5rem 1.75rem',
+        background: 'var(--bg-card)',
+        borderRadius: '1rem',
+        border: '1px solid var(--border)',
+        marginBottom: '0.75rem',
+        transition: 'border-color 0.3s ease',
+      }}
+      onMouseEnter={e => e.currentTarget.style.borderColor = 'rgba(0,240,255,0.15)'}
+      onMouseLeave={e => e.currentTarget.style.borderColor = 'var(--border)'}
+    >
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
+        <div>
+          <p style={{ fontWeight: 600, fontSize: '0.9rem', marginBottom: '0.25rem', color: 'rgba(255,255,255,0.85)' }}>{name}</p>
+          <p style={{ fontSize: '0.65rem', letterSpacing: '0.1em', textTransform: 'uppercase', color: '#00f0ff', opacity: 0.6 }}>{cat}</p>
+        </div>
+        <span style={{
+          fontSize: '0.75rem',
+          fontWeight: 700,
+          color: '#00f0ff',
+          fontFamily: "'Space Grotesk', sans-serif",
+        }}>{level}%</span>
+      </div>
+      <div className="skill-bar-track">
+        <div
+          className="skill-bar-fill"
+          style={{ width: inView ? `${level}%` : '0%' }}
+        />
+      </div>
+    </motion.div>
+  );
+};
+
+const Skills = () => {
+  return (
+    <section
+      id="skills"
+      style={{
+        padding: 'clamp(8rem, 15vw, 14rem) clamp(1.5rem, 5vw, 6rem)',
+        background: 'var(--bg-primary)',
+        position: 'relative',
+        overflow: 'hidden',
+      }}
+    >
+      {/* Ambient glow */}
+      <div style={{
+        position: 'absolute', bottom: '-200px', left: '-100px',
+        width: '500px', height: '500px',
+        background: 'radial-gradient(circle, rgba(0,240,255,0.04) 0%, transparent 70%)',
+        borderRadius: '50%', pointerEvents: 'none',
+      }} />
+
+      <div style={{ maxWidth: '1400px', margin: '0 auto', position: 'relative', zIndex: 1 }}>
+
+        {/* Header */}
+        <div style={{ marginBottom: 'clamp(4rem, 8vw, 7rem)' }}>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
+            className="text-label" style={{ marginBottom: '1.5rem', color: '#00f0ff' }}
           >
-            My <span className="text-gradient">Tech Stack</span>
-          </motion.h2>
-          <motion.p 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.1 }}
-            className="text-gray-400 max-w-xl mx-auto"
-          >
-            A comprehensive list of technologies and tools I use to bring ideas to life.
+            02 — Skills & Expertise
           </motion.p>
+          <motion.h2
+            initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
+            transition={{ delay: 0.1 }}
+            className="text-huge" style={{ maxWidth: '600px' }}
+          >
+            My{' '}
+            <span style={{ color: '#00f0ff' }}>technical</span>{' '}
+            arsenal.
+          </motion.h2>
         </div>
 
-        <motion.div 
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12"
-        >
-          {skillCategories.map((category, index) => (
-            <motion.div
-              key={index}
-              variants={itemVariants}
-              className="p-8 bg-card rounded-3xl border border-white/5 hover:border-purple-500/30 transition-all duration-300 relative group overflow-hidden"
+        {/* Two Columns */}
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 440px), 1fr))',
+          gap: 'clamp(2rem, 6vw, 6rem)',
+          alignItems: 'start',
+        }}>
+          {/* Skill Bars */}
+          <div>
+            <p style={{
+              fontSize: '0.7rem', fontWeight: 600, letterSpacing: '0.15em',
+              textTransform: 'uppercase', color: 'rgba(255,255,255,0.2)',
+              marginBottom: '2rem',
+            }}>Proficiency Levels</p>
+            {skills.map((s, i) => (
+              <SkillBar key={s.name} {...s} i={i} />
+            ))}
+          </div>
+
+          {/* Tech Stack Bubbles + Description */}
+          <div>
+            <motion.p
+              initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
+              style={{
+                fontSize: 'clamp(0.9rem, 1.5vw, 1.05rem)',
+                lineHeight: 1.9,
+                color: 'rgba(255,255,255,0.35)',
+                marginBottom: '3rem',
+              }}
             >
-              <div className="absolute top-0 right-0 p-4 opacity-[0.03] group-hover:opacity-[0.08] transition-opacity pointer-events-none">
-                <category.icon size={120} />
-              </div>
-              
-              <div className="flex items-center gap-4 mb-6">
-                <div className="w-12 h-12 bg-purple-500/10 rounded-xl flex items-center justify-center text-purple-400">
-                  <category.icon size={24} />
-                </div>
-                <h3 className="text-xl font-bold">{category.title}</h3>
-              </div>
+              I'm a passionate web developer with over 3 years of experience
+              creating modern, immersive web applications. I specialize in
+              frontend development using cutting-edge technologies to deliver
+              exceptional user experiences.
+            </motion.p>
 
-              <div className="flex flex-wrap gap-2">
-                {category.skills.map((skill, sIndex) => (
-                  <span 
-                    key={sIndex}
-                    className="px-3 py-1 bg-white/5 rounded-full text-sm text-gray-400 hover:bg-white/10 hover:text-white transition-colors border border-white/5"
-                  >
-                    {skill}
-                  </span>
-                ))}
-              </div>
+            <motion.p
+              initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
+              transition={{ delay: 0.1 }}
+              style={{
+                fontSize: '0.7rem', fontWeight: 600, letterSpacing: '0.15em',
+                textTransform: 'uppercase', color: 'rgba(255,255,255,0.2)',
+                marginBottom: '1.5rem',
+              }}
+            >Tech Stack</motion.p>
 
-              {/* Glow Effect on Hover */}
-              <div className="absolute inset-0 bg-gradient-to-br from-purple-500/0 to-cyan-500/0 group-hover:from-purple-500/5 group-hover:to-cyan-500/5 transition-all duration-500 pointer-events-none"></div>
+            <motion.div
+              initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }}
+              transition={{ delay: 0.2 }}
+              style={{ display: 'flex', flexWrap: 'wrap', gap: '0.75rem' }}
+            >
+              {techStack.map((tech, i) => (
+                <motion.span
+                  key={tech}
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.25 + i * 0.05 }}
+                  style={{
+                    padding: '0.5rem 1.25rem',
+                    border: '1px solid var(--border)',
+                    borderRadius: '100px',
+                    fontSize: '0.75rem',
+                    fontWeight: 500,
+                    color: 'rgba(255,255,255,0.5)',
+                    background: 'var(--bg-card)',
+                    transition: 'all 0.3s ease',
+                    cursor: 'none',
+                  }}
+                  whileHover={{
+                    borderColor: '#00f0ff',
+                    color: '#00f0ff',
+                    background: 'rgba(0,240,255,0.05)',
+                    y: -4,
+                  }}
+                >
+                  {tech}
+                </motion.span>
+              ))}
             </motion.div>
-          ))}
-        </motion.div>
+          </div>
+        </div>
       </div>
     </section>
   );

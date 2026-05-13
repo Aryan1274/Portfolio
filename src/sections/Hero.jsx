@@ -1,203 +1,276 @@
-import React, { useEffect, useState, useRef } from 'react';
-import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
-import { Code, User, Share2, ArrowRight } from 'lucide-react';
+import React, { useEffect, useRef, useState } from 'react';
+import { motion, useMotionValue, useTransform, AnimatePresence } from 'framer-motion';
+
+const roles = ['UI/UX Designer', 'Creative Developer', 'Motion Designer', 'Brand Strategist'];
 
 const Hero = () => {
   const [roleIndex, setRoleIndex] = useState(0);
-  const roles = ['Full Stack Developer', 'UI/UX Designer', 'Creative Developer', 'Tech Enthusiast'];
-  const containerRef = useRef(null);
-
-  // Mouse parallax motion values
+  const [displayText, setDisplayText] = useState('');
+  const [isDeleting, setIsDeleting] = useState(false);
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
 
-  // Smooth springs for mouse movement
-  const springX = useSpring(mouseX, { stiffness: 100, damping: 30 });
-  const springY = useSpring(mouseY, { stiffness: 100, damping: 30 });
-
-  // Transforms for parallax layers
-  const layer1X = useTransform(springX, [-500, 500], [-20, 20]);
-  const layer1Y = useTransform(springY, [-500, 500], [-20, 20]);
-  const layer2X = useTransform(springX, [-500, 500], [-40, 40]);
-  const layer2Y = useTransform(springY, [-500, 500], [-40, 40]);
-  const layer3X = useTransform(springX, [-500, 500], [-60, 60]);
-  const layer3Y = useTransform(springY, [-500, 500], [-60, 60]);
-
+  // Typewriter effect
   useEffect(() => {
-    const handleMouseMove = (e) => {
-      const { clientX, clientY } = e;
-      const { innerWidth, innerHeight } = window;
-      mouseX.set(clientX - innerWidth / 2);
-      mouseY.set(clientY - innerHeight / 2);
-    };
-
-    window.addEventListener('mousemove', handleMouseMove);
-    
-    const interval = setInterval(() => {
+    const current = roles[roleIndex];
+    let timeout;
+    if (!isDeleting && displayText.length < current.length) {
+      timeout = setTimeout(() => setDisplayText(current.slice(0, displayText.length + 1)), 80);
+    } else if (!isDeleting && displayText.length === current.length) {
+      timeout = setTimeout(() => setIsDeleting(true), 2000);
+    } else if (isDeleting && displayText.length > 0) {
+      timeout = setTimeout(() => setDisplayText(current.slice(0, displayText.length - 1)), 40);
+    } else if (isDeleting && displayText.length === 0) {
+      setIsDeleting(false);
       setRoleIndex((prev) => (prev + 1) % roles.length);
-    }, 3000);
+    }
+    return () => clearTimeout(timeout);
+  }, [displayText, isDeleting, roleIndex]);
 
-    return () => {
-      window.removeEventListener('mousemove', handleMouseMove);
-      clearInterval(interval);
+  // Parallax mouse
+  useEffect(() => {
+    const onMove = (e) => {
+      mouseX.set((e.clientX / window.innerWidth - 0.5) * 40);
+      mouseY.set((e.clientY / window.innerHeight - 0.5) * 40);
     };
+    window.addEventListener('mousemove', onMove);
+    return () => window.removeEventListener('mousemove', onMove);
   }, []);
 
+  const blob1X = useTransform(mouseX, v => v * 0.5);
+  const blob1Y = useTransform(mouseY, v => v * 0.5);
+  const blob2X = useTransform(mouseX, v => v * -0.3);
+  const blob2Y = useTransform(mouseY, v => v * -0.3);
+
+  const containerVariants = {
+    hidden: {},
+    visible: { transition: { staggerChildren: 0.15 } }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 60 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.9, ease: [0.22, 1, 0.36, 1] } }
+  };
+
   return (
-    <section 
-      id="home" 
-      ref={containerRef}
-      className="section-wrapper min-h-screen flex flex-col items-center justify-center overflow-hidden"
+    <section
+      id="home"
+      style={{
+        minHeight: '100vh',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        position: 'relative',
+        overflow: 'hidden',
+        padding: 'clamp(7rem, 15vh, 12rem) clamp(1.5rem, 5vw, 6rem) clamp(4rem, 8vh, 8rem)',
+      }}
     >
-      {/* Background Animated Blobs */}
-      <div className="absolute inset-0 z-0">
-        <motion.div 
-          style={{ x: layer1X, y: layer1Y }}
-          animate={{ scale: [1, 1.2, 1] }}
-          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute top-1/4 left-1/4 w-96 h-96 bg-purple-600/20 rounded-full blur-[120px]"
-        />
-        <motion.div 
-          style={{ x: layer2X, y: layer2Y }}
-          animate={{ scale: [1, 1.3, 1] }}
-          transition={{ duration: 12, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-          className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-cyan-600/20 rounded-full blur-[120px]"
-        />
-        <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 pointer-events-none"></div>
-      </div>
+      {/* Ambient background blobs */}
+      <motion.div
+        style={{
+          position: 'absolute', top: '20%', left: '60%',
+          width: '600px', height: '600px',
+          background: 'radial-gradient(circle, rgba(0, 240, 255, 0.06) 0%, transparent 70%)',
+          borderRadius: '50%', pointerEvents: 'none',
+          x: blob1X, y: blob1Y,
+        }}
+      />
+      <motion.div
+        style={{
+          position: 'absolute', bottom: '10%', left: '10%',
+          width: '500px', height: '500px',
+          background: 'radial-gradient(circle, rgba(155, 93, 229, 0.06) 0%, transparent 70%)',
+          borderRadius: '50%', pointerEvents: 'none',
+          x: blob2X, y: blob2Y,
+        }}
+      />
 
-      {/* Decorative Floating Elements */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        {[...Array(6)].map((_, i) => (
-          <motion.div
-            key={i}
-            initial={{ opacity: 0 }}
-            animate={{ 
-              opacity: [0.1, 0.3, 0.1],
-              y: [0, -40, 0],
-            }}
-            style={{
-              left: `${10 + Math.random() * 80}%`,
-              top: `${10 + Math.random() * 80}%`,
-              x: i % 2 === 0 ? layer2X : layer3X,
-              y: i % 2 === 0 ? layer2Y : layer3Y,
-            }}
-            transition={{ 
-              duration: 8 + Math.random() * 4, 
-              repeat: Infinity,
-              delay: Math.random() * 5
-            }}
-            className="absolute px-4 py-2 glass rounded-full border border-white/5"
-          >
-            <div className="text-[10px] font-mono text-purple-400/60 font-bold tracking-widest uppercase">
-              {['<div>', 'const', '=>', 'import', 'render', 'async'][i]}
-            </div>
-          </motion.div>
-        ))}
-      </div>
-
-      <div className="container mx-auto z-10 flex flex-col items-center text-center">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="mb-8 px-6 py-2 glass rounded-full text-xs font-bold uppercase tracking-[0.3em] text-purple-400 border border-purple-500/20 inline-block shadow-lg shadow-purple-500/10"
-        >
-          Available for new opportunities
+      <motion.div
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+        style={{ position: 'relative', zIndex: 1, maxWidth: '1400px' }}
+      >
+        {/* Status Badge */}
+        <motion.div variants={itemVariants} style={{ marginBottom: '2.5rem' }}>
+          <span style={{
+            display: 'inline-flex', alignItems: 'center', gap: '0.6rem',
+            padding: '0.45rem 1.25rem',
+            border: '1px solid rgba(0, 240, 255, 0.2)',
+            borderRadius: '100px',
+            fontSize: '0.7rem',
+            fontWeight: 600,
+            letterSpacing: '0.15em',
+            textTransform: 'uppercase',
+            color: '#00f0ff',
+            background: 'rgba(0, 240, 255, 0.04)',
+          }}>
+            <span style={{
+              width: '6px', height: '6px', borderRadius: '50%',
+              background: '#00f0ff',
+              boxShadow: '0 0 8px #00f0ff',
+              animation: 'blink 2s ease-in-out infinite',
+            }} />
+            Available for new opportunities
+          </span>
         </motion.div>
 
-        <motion.h1 
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          className="text-7xl md:text-9xl font-black tracking-tighter mb-8 leading-[0.9]"
-        >
-          I'm <span className="text-gradient">Aryan</span> <br />
-          <div className="h-24 md:h-32 overflow-hidden inline-flex items-center">
-            <motion.span
-              key={roleIndex}
-              initial={{ y: 80, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              exit={{ y: -80, opacity: 0 }}
-              transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-              className="text-white"
-            >
-              {roles[roleIndex]}
-            </motion.span>
-          </div>
-        </motion.h1>
+        {/* Giant Name */}
+        <motion.div variants={itemVariants} style={{ overflow: 'hidden' }}>
+          <h1 className="text-giant" style={{
+            marginBottom: '0.5rem',
+            lineHeight: 0.85,
+          }}>
+            <span style={{ color: 'rgba(255,255,255,0.15)', display: 'block', marginBottom: '0.2em' }}>
+              Hey👋, I'm
+            </span>
+            <span style={{
+              display: 'block',
+              background: 'linear-gradient(135deg, #ffffff 30%, rgba(255,255,255,0.6) 100%)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              backgroundClip: 'text',
+            }}>
+              Aryan.
+            </span>
+          </h1>
+        </motion.div>
 
-        <motion.p 
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.4 }}
-          className="text-gray-400 text-lg md:text-2xl max-w-3xl mx-auto mt-[60px] mb-[120px] leading-relaxed px-10"
-        >
-          Crafting digital experiences that merge cutting-edge technology with premium design aesthetics. 
-          Specializing in high-performance web applications and immersive animations.
+        {/* Typewriter Role */}
+        <motion.div variants={itemVariants} style={{ marginBottom: '3rem', marginTop: '1.5rem' }}>
+          <p style={{
+            fontFamily: "'Space Grotesk', sans-serif",
+            fontSize: 'clamp(1.25rem, 3vw, 2rem)',
+            fontWeight: 400,
+            color: 'rgba(255,255,255,0.5)',
+            letterSpacing: '-0.01em',
+          }}>
+            I'm a{' '}
+            <span style={{ color: '#00f0ff', fontWeight: 600 }}>
+              {displayText}
+              <span className="cursor-blink" style={{ color: '#00f0ff' }}>|</span>
+            </span>
+          </p>
+        </motion.div>
+
+        {/* Bio */}
+        <motion.p variants={itemVariants} style={{
+          maxWidth: '540px',
+          fontSize: 'clamp(0.875rem, 1.5vw, 1rem)',
+          lineHeight: 1.8,
+          color: 'rgba(255,255,255,0.35)',
+          marginBottom: '3.5rem',
+        }}>
+          I create beautiful, responsive web experiences using modern technologies.
+          Passionate about clean code, immersive animations, and user-centered design.
         </motion.p>
 
-        <div className="flex flex-col items-center gap-[100px] mb-[150px]">
-          <motion.div 
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.6 }}
-            className="flex flex-col sm:flex-row items-center justify-center gap-6"
-          >
-            <a 
-              href="#projects" 
-              className="group px-10 py-5 bg-white text-black font-bold rounded-2xl hover:scale-105 transition-all duration-300 flex items-center gap-3 shadow-2xl shadow-white/10"
-            >
-              View Projects
-              <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
-            </a>
-            <a 
-              href="#contact" 
-              className="px-10 py-5 glass text-white font-bold rounded-2xl hover:bg-white/10 hover:scale-105 transition-all duration-300 shadow-xl"
-            >
-              Contact Me
-            </a>
-          </motion.div>
+        {/* CTA Buttons */}
+        <motion.div variants={itemVariants} style={{ display: 'flex', gap: '1.25rem', flexWrap: 'wrap', marginBottom: '5rem' }}>
+          <a href="#projects" className="btn-primary">
+            View My Work
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+          </a>
+          <a href="#" download className="btn-outline">
+            Download CV
+          </a>
+        </motion.div>
 
-          {/* Social Links Area */}
-          <div className="flex flex-col items-center gap-8">
-            <div className="flex gap-6">
-              {[
-                { Icon: Code, href: '#', label: 'GitHub' },
-                { Icon: User, href: '#', label: 'LinkedIn' },
-                { Icon: Share2, href: '#', label: 'Twitter' }
-              ].map((social, index) => (
-                <motion.a
-                  key={index}
-                  href={social.href}
-                  initial={{ opacity: 0, scale: 0.5 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.5, delay: 0.8 + index * 0.1 }}
-                  whileHover={{ 
-                    y: -10, 
-                    rotateX: 15, 
-                    rotateY: 15,
-                    boxShadow: "0 20px 40px rgba(139, 92, 246, 0.3)"
-                  }}
-                  className="w-14 h-14 glass rounded-2xl flex items-center justify-center text-gray-400 hover:text-white hover:border-purple-500/50 transition-all perspective-1000"
-                >
-                  <social.Icon size={24} />
-                </motion.a>
-              ))}
-            </div>
+        {/* Stats Row */}
+        <motion.div variants={itemVariants}>
+          <div style={{ display: 'flex', gap: '3rem', flexWrap: 'wrap' }}>
+            {[
+              { number: '3+', label: 'Years Experience' },
+              { number: '20+', label: 'Projects Done' },
+              { number: '10+', label: 'Happy Clients' },
+            ].map((stat) => (
+              <div key={stat.label}>
+                <p style={{
+                  fontFamily: "'Space Grotesk', sans-serif",
+                  fontSize: 'clamp(1.5rem, 3vw, 2.25rem)',
+                  fontWeight: 800,
+                  color: '#00f0ff',
+                  letterSpacing: '-0.03em',
+                  lineHeight: 1,
+                  marginBottom: '0.4rem',
+                }}>{stat.number}</p>
+                <p style={{ fontSize: '0.7rem', color: 'rgba(255,255,255,0.3)', letterSpacing: '0.12em', textTransform: 'uppercase' }}>
+                  {stat.label}
+                </p>
+              </div>
+            ))}
           </div>
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
 
-      {/* Scroll Down Indicator - Pushed Down to Bottom */}
-      <motion.div 
+      {/* Scroll Indicator */}
+      <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 2 }}
-        className="absolute bottom-24 left-1/2 -translate-x-1/2 flex flex-col items-center gap-6 pointer-events-none"
+        style={{
+          position: 'absolute',
+          right: 'clamp(1.5rem, 5vw, 6rem)',
+          bottom: '3rem',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          gap: '1rem',
+        }}
       >
-        <span className="text-xs uppercase tracking-[0.5em] text-gray-600 font-black">Scroll</span>
-        <div className="w-[1px] h-24 bg-gradient-to-b from-purple-500/50 to-transparent"></div>
+        <span style={{
+          fontSize: '0.6rem',
+          fontWeight: 700,
+          letterSpacing: '0.35em',
+          textTransform: 'uppercase',
+          color: 'rgba(255,255,255,0.2)',
+          writingMode: 'vertical-rl',
+        }}>Scroll</span>
+        <motion.div
+          animate={{ scaleY: [0, 1, 0], originY: 0 }}
+          transition={{ repeat: Infinity, duration: 1.5, ease: 'easeInOut' }}
+          style={{
+            width: '1px',
+            height: '80px',
+            background: 'linear-gradient(to bottom, #00f0ff, transparent)',
+          }}
+        />
+      </motion.div>
+
+      {/* Social Links */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1.5 }}
+        style={{
+          position: 'absolute',
+          left: 'clamp(1.5rem, 5vw, 6rem)',
+          bottom: '3rem',
+          display: 'flex',
+          gap: '2rem',
+        }}
+      >
+        {['/ Twitter (X)', '/ LinkedIn', '/ GitHub'].map((link) => (
+          <a
+            key={link}
+            href="#"
+            style={{
+              fontSize: '0.7rem',
+              fontWeight: 500,
+              letterSpacing: '0.05em',
+              color: 'rgba(255,255,255,0.2)',
+              textDecoration: 'none',
+              transition: 'color 0.3s ease',
+              cursor: 'none',
+            }}
+            onMouseEnter={e => e.target.style.color = '#00f0ff'}
+            onMouseLeave={e => e.target.style.color = 'rgba(255,255,255,0.2)'}
+          >
+            {link}
+          </a>
+        ))}
       </motion.div>
     </section>
   );

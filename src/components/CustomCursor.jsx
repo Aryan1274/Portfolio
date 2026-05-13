@@ -1,62 +1,65 @@
-import React, { useEffect, useState } from 'react';
-import { motion, useMotionValue, useSpring } from 'framer-motion';
+import React, { useEffect, useRef, useState } from 'react';
 
 const CustomCursor = () => {
+  const dotRef = useRef(null);
+  const ringRef = useRef(null);
   const [isHovering, setIsHovering] = useState(false);
-  const cursorX = useMotionValue(-100);
-  const cursorY = useMotionValue(-100);
-  
-  const springConfig = { damping: 25, stiffness: 700 };
-  const cursorXSpring = useSpring(cursorX, springConfig);
-  const cursorYSpring = useSpring(cursorY, springConfig);
 
   useEffect(() => {
-    const moveCursor = (e) => {
-      cursorX.set(e.clientX);
-      cursorY.set(e.clientY);
+    const dot = dotRef.current;
+    const ring = ringRef.current;
+    if (!dot || !ring) return;
+
+    let mouseX = 0, mouseY = 0;
+    let ringX = 0, ringY = 0;
+    let animId;
+
+    const onMouseMove = (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+      dot.style.transform = `translate(${mouseX - 4}px, ${mouseY - 4}px)`;
     };
 
-    const handleMouseOver = (e) => {
-      if (e.target.tagName === 'A' || e.target.tagName === 'BUTTON' || e.target.closest('button') || e.target.closest('a')) {
-        setIsHovering(true);
-      } else {
-        setIsHovering(false);
-      }
+    const animate = () => {
+      ringX += (mouseX - ringX - 18) * 0.12;
+      ringY += (mouseY - ringY - 18) * 0.12;
+      ring.style.transform = `translate(${ringX}px, ${ringY}px)`;
+      animId = requestAnimationFrame(animate);
     };
 
-    window.addEventListener('mousemove', moveCursor);
-    window.addEventListener('mouseover', handleMouseOver);
+    const onMouseEnterLink = () => {
+      setIsHovering(true);
+      dot.style.transform += ' scale(0)';
+    };
+
+    const onMouseLeaveLink = () => {
+      setIsHovering(false);
+      dot.style.opacity = '1';
+    };
+
+    const interactables = document.querySelectorAll('a, button, [data-hover]');
+    interactables.forEach(el => {
+      el.addEventListener('mouseenter', onMouseEnterLink);
+      el.addEventListener('mouseleave', onMouseLeaveLink);
+    });
+
+    window.addEventListener('mousemove', onMouseMove);
+    animId = requestAnimationFrame(animate);
 
     return () => {
-      window.removeEventListener('mousemove', moveCursor);
-      window.removeEventListener('mouseover', handleMouseOver);
+      window.removeEventListener('mousemove', onMouseMove);
+      cancelAnimationFrame(animId);
+      interactables.forEach(el => {
+        el.removeEventListener('mouseenter', onMouseEnterLink);
+        el.removeEventListener('mouseleave', onMouseLeaveLink);
+      });
     };
-  }, [cursorX, cursorY]);
+  }, []);
 
   return (
     <>
-      <motion.div
-        className="fixed top-0 left-0 w-8 h-8 border border-purple-500 rounded-full pointer-events-none z-[9999] mix-blend-difference"
-        style={{
-          x: cursorXSpring,
-          y: cursorYSpring,
-          translateX: '-50%',
-          translateY: '-50%',
-        }}
-        animate={{
-          scale: isHovering ? 2.5 : 1,
-          backgroundColor: isHovering ? 'rgba(168, 85, 247, 0.2)' : 'transparent',
-        }}
-      />
-      <motion.div
-        className="fixed top-0 left-0 w-1.5 h-1.5 bg-white rounded-full pointer-events-none z-[9999]"
-        style={{
-          x: cursorX,
-          y: cursorY,
-          translateX: '-50%',
-          translateY: '-50%',
-        }}
-      />
+      <div ref={dotRef} className="cursor-dot" />
+      <div ref={ringRef} className={`cursor-ring ${isHovering ? 'hover' : ''}`} />
     </>
   );
 };

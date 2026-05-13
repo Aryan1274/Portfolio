@@ -1,89 +1,135 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { User, Code, Palette, Zap } from 'lucide-react';
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 50 },
+  visible: (i = 0) => ({
+    opacity: 1, y: 0,
+    transition: { duration: 0.8, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] }
+  })
+};
+
+const stats = [
+  { label: 'Degree', value: 'B.Tech Computer Science', sub: '2022 – 2026' },
+  { label: 'Focus', value: 'UI/UX & Frontend Dev', sub: 'Full Stack Capable' },
+  { label: 'Location', value: 'India', sub: 'Remote-friendly' },
+];
 
 const About = () => {
-  const fadeIn = {
-    initial: { opacity: 0, y: 20 },
-    whileInView: { opacity: 1, y: 0 },
-    viewport: { once: true },
-    transition: { duration: 0.6 }
-  };
-
-  const cards = [
-    { icon: Code, title: 'Development', text: 'Building robust and scalable applications.' },
-    { icon: Palette, title: 'Design', text: 'Crafting intuitive and beautiful user interfaces.' },
-    { icon: Zap, title: 'Performance', text: 'Optimizing for speed and seamless interactions.' },
-    { icon: User, title: 'User Focus', text: 'Designing experiences centered around the user.' }
-  ];
-
   return (
-    <section id="about" className="section-wrapper bg-surface overflow-hidden">
-      <div className="section-container">
-        <div className="flex flex-col lg:flex-row gap-24 items-center">
-          {/* Image Side */}
-          <motion.div 
-            {...fadeIn}
-            className="lg:w-1/2 relative"
-          >
-            <div className="w-full aspect-square max-w-md mx-auto relative">
-              <div className="absolute inset-0 bg-gradient-to-br from-purple-500 to-cyan-500 rounded-3xl rotate-6 opacity-20 blur-xl animate-pulse"></div>
-              <div className="relative w-full h-full bg-card rounded-3xl border border-white/10 overflow-hidden">
-                <img 
-                  src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=800" 
-                  alt="Profile" 
-                  className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700"
-                />
-              </div>
-              {/* Floating Badge */}
-              <motion.div 
-                animate={{ y: [0, -10, 0] }}
-                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                className="absolute -bottom-6 -right-6 glass p-6 rounded-2xl border border-white/10 hidden sm:block"
-              >
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 bg-purple-500/20 rounded-full flex items-center justify-center text-purple-400">
-                    <Code size={24} />
-                  </div>
-                  <div>
-                    <p className="text-xs text-gray-400 font-bold uppercase tracking-widest">Experience</p>
-                    <p className="text-xl font-bold">3+ Years</p>
-                  </div>
-                </div>
-              </motion.div>
-            </div>
-          </motion.div>
+    <section
+      id="about"
+      style={{
+        padding: 'clamp(8rem, 15vw, 14rem) clamp(1.5rem, 5vw, 6rem)',
+        position: 'relative',
+        background: 'var(--bg-secondary)',
+        overflow: 'hidden',
+      }}
+    >
+      {/* Subtle glow */}
+      <div style={{
+        position: 'absolute', top: '-200px', right: '-200px',
+        width: '600px', height: '600px',
+        background: 'radial-gradient(circle, rgba(155,93,229,0.06) 0%, transparent 70%)',
+        borderRadius: '50%', pointerEvents: 'none',
+      }} />
 
-          {/* Text Side */}
-          <div className="lg:w-1/2">
-            <motion.div {...fadeIn}>
-              <h2 className="text-5xl md:text-7xl font-bold mb-12 tracking-tighter">
-                Passionate about <span className="text-gradient">Innovation</span>
-              </h2>
-              <p className="text-gray-400 text-lg md:text-xl mb-12 leading-relaxed max-w-2xl">
-                I am a creative developer based in India, dedicated to building high-end digital solutions that push the boundaries of the web. With a strong foundation in both design and engineering, I create products that are not only functional but also visually stunning.
-              </p>
-              
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                {cards.map((card, index) => (
-                  <motion.div
-                    key={index}
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.5, delay: index * 0.1 }}
-                    className="p-6 bg-card rounded-2xl border border-white/5 hover:border-purple-500/30 transition-all duration-300 group"
-                  >
-                    <div className="w-10 h-10 bg-white/5 rounded-lg flex items-center justify-center mb-4 group-hover:bg-purple-500/10 group-hover:text-purple-400 transition-all">
-                      <card.icon size={20} />
-                    </div>
-                    <h3 className="text-lg font-bold mb-2">{card.title}</h3>
-                    <p className="text-sm text-gray-500 leading-relaxed">{card.text}</p>
-                  </motion.div>
-                ))}
-              </div>
+      <div style={{ maxWidth: '1400px', margin: '0 auto', position: 'relative', zIndex: 1 }}>
+
+        {/* Section Label */}
+        <motion.p
+          variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }}
+          className="text-label"
+          style={{ marginBottom: '1.5rem', color: '#00f0ff' }}
+        >
+          01 — About Me
+        </motion.p>
+
+        {/* Grid Layout */}
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 480px), 1fr))',
+          gap: 'clamp(3rem, 8vw, 8rem)',
+          alignItems: 'start',
+        }}>
+          {/* Left: Big Heading */}
+          <div>
+            <motion.h2
+              variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }}
+              className="text-huge"
+              style={{ marginBottom: '2.5rem', color: 'rgba(255,255,255,0.9)' }}
+            >
+              Passionate about{' '}
+              <span style={{ color: '#00f0ff' }}>crafting</span>{' '}
+              digital experiences.
+            </motion.h2>
+
+            {/* Divider */}
+            <motion.div
+              variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }} custom={1}
+              className="divider"
+              style={{ marginBottom: '2.5rem' }}
+            />
+
+            {/* Stats Grid */}
+            <motion.div
+              variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }} custom={2}
+              style={{
+                display: 'grid',
+                gridTemplateColumns: '1fr 1fr',
+                gap: '2rem',
+              }}
+            >
+              {stats.map((s) => (
+                <div key={s.label} style={{
+                  padding: '1.5rem',
+                  background: 'var(--bg-card)',
+                  borderRadius: '1rem',
+                  border: '1px solid var(--border)',
+                }}>
+                  <p className="text-label" style={{ marginBottom: '0.6rem' }}>{s.label}</p>
+                  <p style={{ fontWeight: 700, fontSize: '0.95rem', marginBottom: '0.3rem', color: 'rgba(255,255,255,0.85)' }}>{s.value}</p>
+                  <p style={{ fontSize: '0.75rem', color: 'rgba(255,255,255,0.3)' }}>{s.sub}</p>
+                </div>
+              ))}
             </motion.div>
           </div>
+
+          {/* Right: Bio Text */}
+          <motion.div
+            variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }} custom={1}
+          >
+            <p style={{
+              fontSize: 'clamp(1rem, 2vw, 1.2rem)',
+              lineHeight: 1.9,
+              color: 'rgba(255,255,255,0.4)',
+              marginBottom: '2.5rem',
+            }}>
+              Hi, I'm Aryan — a creative developer with a passion for building
+              immersive web experiences. I combine technical precision with
+              design sensibility to create products that feel as good as they look.
+            </p>
+            <p style={{
+              fontSize: 'clamp(1rem, 2vw, 1.2rem)',
+              lineHeight: 1.9,
+              color: 'rgba(255,255,255,0.4)',
+              marginBottom: '3rem',
+            }}>
+              With 3+ years of experience in frontend development, UI/UX design,
+              and motion graphics, I specialize in turning complex ideas into
+              elegant, user-centered digital solutions.
+            </p>
+
+            <div style={{ display: 'flex', gap: '1.25rem', flexWrap: 'wrap' }}>
+              <a href="#projects" className="btn-primary">
+                See My Work
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                  <path d="M5 12h14M12 5l7 7-7 7"/>
+                </svg>
+              </a>
+              <a href="#contact" className="btn-outline">Get In Touch</a>
+            </div>
+          </motion.div>
         </div>
       </div>
     </section>

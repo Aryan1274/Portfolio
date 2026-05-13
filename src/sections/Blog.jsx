@@ -1,112 +1,104 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Calendar, Clock, ArrowUpRight } from 'lucide-react';
+
+const posts = [
+  {
+    title: 'The Future of Web Design in 2026',
+    date: 'May 10, 2026',
+    readTime: '5 min read',
+    image: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=1600'
+  },
+  {
+    title: 'Mastering Framer Motion for Immersive UX',
+    date: 'May 05, 2026',
+    readTime: '8 min read',
+    image: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&q=80&w=1600'
+  },
+  {
+    title: 'Building Scalable Next.js Applications',
+    date: 'April 28, 2026',
+    readTime: '12 min read',
+    image: 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&q=80&w=1600'
+  }
+];
+
+const BlogCard = ({ post, i }) => {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 50 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.8, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] }}
+      className="card group cursor-none h-full flex flex-col"
+    >
+      <div className="relative aspect-video overflow-hidden">
+        <motion.img 
+          src={post.image} 
+          alt={post.title}
+          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+        />
+        <div className="absolute top-4 right-4 px-3 py-1 glass rounded-full text-[10px] font-bold text-[#00f0ff] uppercase tracking-widest">
+          {post.readTime}
+        </div>
+      </div>
+      
+      <div className="p-8 flex-grow flex flex-col">
+        <p className="text-[#555] text-[10px] font-bold tracking-[0.2em] uppercase mb-4">
+          {post.date}
+        </p>
+        <h3 className="text-2xl font-bold text-white mb-8 group-hover:text-[#00f0ff] transition-colors leading-tight">
+          {post.title}
+        </h3>
+        
+        <div className="mt-auto">
+          <a href="#" className="inline-flex items-center gap-4 text-white text-[10px] font-bold tracking-[0.3em] uppercase group/link">
+            Read Article
+            <div className="w-8 h-px bg-white/20 transition-all group-hover/link:w-16 group-hover/link:bg-[#00f0ff]" />
+          </a>
+        </div>
+      </div>
+    </motion.div>
+  );
+};
 
 const Blog = () => {
-  const posts = [
-    {
-      title: 'The Future of Web Design in 2026',
-      excerpt: 'Exploring how AI and spatial computing are reshaping the digital landscape and user expectations.',
-      date: 'May 10, 2026',
-      readTime: '5 min read',
-      category: 'Design',
-      image: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=1000'
-    },
-    {
-      title: 'Mastering Framer Motion for Immersive UX',
-      excerpt: 'A deep dive into advanced animation techniques that make your websites feel alive and responsive.',
-      date: 'May 05, 2026',
-      readTime: '8 min read',
-      category: 'Development',
-      image: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&q=80&w=1000'
-    },
-    {
-      title: 'Building Scalable Next.js Applications',
-      excerpt: 'Best practices for architecture, state management, and performance optimization in large-scale projects.',
-      date: 'April 28, 2026',
-      readTime: '12 min read',
-      category: 'Tech',
-      image: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=1000'
-    }
-  ];
-
   return (
-    <section id="blog" className="section-wrapper bg-background">
-      <div className="section-container">
-        <div className="section-header">
+    <section id="blog" className="section bg-primary">
+      <div className="section-inner">
+        <div className="flex flex-col md:flex-row justify-between items-end mb-24 gap-8">
           <div className="max-w-xl">
-            <motion.h2 
+            <motion.p
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="text-4xl md:text-5xl font-bold mb-4"
+              className="text-label text-[#9b5de5] mb-6"
             >
-              Latest <span className="text-gradient">Insights</span>
-            </motion.h2>
-            <motion.p 
-              initial={{ opacity: 0, y: 20 }}
+              04 — Insights & Ideas
+            </motion.p>
+            <motion.h2
+              initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.1 }}
-              className="text-gray-400"
+              className="text-huge"
             >
-              Thoughts on design, development, and the future of technology.
-            </motion.p>
+              Thoughts on <span className="text-white">design</span> & tech.
+            </motion.h2>
           </div>
+          
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2 }}
+          >
+            <a href="#" className="btn-outline">Browse All Posts</a>
+          </motion.div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
-          {posts.map((post, index) => (
-            <motion.article
-              key={index}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
-              className="group bg-card rounded-3xl border border-white/5 overflow-hidden hover:border-purple-500/30 transition-all duration-500"
-            >
-              <div className="relative h-64 overflow-hidden">
-                <img 
-                  src={post.image} 
-                  alt={post.title} 
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                />
-                <div className="absolute top-4 left-4">
-                  <span className="px-3 py-1 glass rounded-full text-[10px] font-bold uppercase tracking-widest text-purple-400">
-                    {post.category}
-                  </span>
-                </div>
-              </div>
-
-              <div className="p-8">
-                <div className="flex items-center gap-4 text-xs text-gray-500 mb-4">
-                  <div className="flex items-center gap-1">
-                    <Calendar size={14} />
-                    {post.date}
-                  </div>
-                  <div className="flex items-center gap-1">
-                    <Clock size={14} />
-                    {post.readTime}
-                  </div>
-                </div>
-
-                <h3 className="text-2xl font-bold mb-4 group-hover:text-purple-400 transition-colors line-clamp-2">
-                  {post.title}
-                </h3>
-                
-                <p className="text-gray-500 text-sm mb-6 line-clamp-3">
-                  {post.excerpt}
-                </p>
-
-                <a 
-                  href="#" 
-                  className="inline-flex items-center gap-2 text-sm font-bold text-white hover:text-purple-400 transition-colors"
-                >
-                  Read Article
-                  <ArrowUpRight size={18} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
-                </a>
-              </div>
-            </motion.article>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+          {posts.map((post, i) => (
+            <BlogCard key={post.title} post={post} i={i} />
           ))}
         </div>
       </div>
