@@ -171,9 +171,11 @@ const Contact = () => {
             
             <div className="space-y-8">
               {[
-                { label: 'Email', value: 'hello@aryan.dev', color: '#00f0ff' },
-                { label: 'Location', value: 'Mumbai, India', color: '#9b5de5' },
-                { label: 'Social', value: '@AryanDev', color: '#00ff87' }
+                { label: 'Email', value: 'aryan12verma2004@gmail.com', color: '#00f0ff' },
+                { label: 'Phone', value: '+91 95928 81227', color: '#9b5de5' },
+                { label: 'Location', value: 'Ludhiana, Punjab, India', color: '#00ff87' },
+                { label: 'Social', value: 'GitHub / LinkedIn', color: '#9b5de5' }
+
               ].map((item, i) => (
                 <motion.div
                   key={item.label}
@@ -190,6 +192,7 @@ const Contact = () => {
                 </motion.div>
               ))}
             </div>
+
           </div>
           
           {/* Right Side - Form */}

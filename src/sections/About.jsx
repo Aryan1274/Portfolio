@@ -10,9 +10,9 @@ const fadeUp = {
 };
 
 const stats = [
-  { label: 'Degree', value: 'B.Tech Computer Science', sub: '2022 – 2026' },
-  { label: 'Focus', value: 'UI/UX & Frontend Dev', sub: 'Full Stack Capable' },
-  { label: 'Location', value: 'India', sub: 'Remote-friendly' },
+  { label: 'Degree', value: 'MCA AI/ML (RBU)', sub: '2025 – 2027' },
+  { label: 'BCA', value: 'GGNIMT', sub: '2022 – 2025' },
+  { label: 'Location', value: 'Punjab, India', sub: 'Remote-friendly' },
 ];
 
 const About = () => {
@@ -105,9 +105,7 @@ const About = () => {
               color: 'rgba(255,255,255,0.4)',
               marginBottom: '2.5rem',
             }}>
-              Hi, I'm Aryan — a creative developer with a passion for building
-              immersive web experiences. I combine technical precision with
-              design sensibility to create products that feel as good as they look.
+              Hi, I'm Aryan Verma — a passionate and self-motivated MCA AI/ML student at Rayat Bahra University. I combine technical precision with design sensibility to create digital experiences that stand out.
             </p>
             <p style={{
               fontSize: 'clamp(1rem, 2vw, 1.2rem)',
@@ -115,9 +113,7 @@ const About = () => {
               color: 'rgba(255,255,255,0.4)',
               marginBottom: '3rem',
             }}>
-              With 3+ years of experience in frontend development, UI/UX design,
-              and motion graphics, I specialize in turning complex ideas into
-              elegant, user-centered digital solutions.
+              Currently working as a Web Developer and Content Creator at The Clyou, I've built a strong foundation in full-stack development. My journey began during my BCA at GGNIMT, where I started practicing and mastering the art of building scalable web applications.
             </p>
 
             <div style={{ display: 'flex', gap: '1.25rem', flexWrap: 'wrap' }}>

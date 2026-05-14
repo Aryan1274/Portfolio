@@ -2,19 +2,19 @@ import React, { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 
 const skills = [
-  { name: 'React / Next.js', level: 90, cat: 'Frontend' },
-  { name: 'JavaScript / TypeScript', level: 85, cat: 'Frontend' },
-  { name: 'UI/UX Design (Figma)', level: 88, cat: 'Design' },
-  { name: 'Tailwind CSS / SCSS', level: 92, cat: 'Frontend' },
-  { name: 'Node.js / Express', level: 75, cat: 'Backend' },
-  { name: 'Framer Motion / GSAP', level: 80, cat: 'Animation' },
-  { name: 'MongoDB / PostgreSQL', level: 70, cat: 'Backend' },
-  { name: 'Three.js / WebGL', level: 65, cat: 'Creative' },
+  { name: 'Full Stack Development', level: 92, cat: 'Development' },
+  { name: 'React / Node.js / Express', level: 90, cat: 'Full Stack' },
+  { name: 'Programming (C/C++, Java)', level: 85, cat: 'Programming' },
+  { name: 'UI/UX Design', level: 88, cat: 'Design' },
+  { name: 'WordPress & Hosting', level: 95, cat: 'Web Tools' },
+  { name: 'AI Optimization & Automation', level: 80, cat: 'AI/ML' },
+  { name: 'Content Creation', level: 85, cat: 'Social' },
+  { name: 'MongoDB Atlas', level: 82, cat: 'Database' },
 ];
 
 const techStack = [
-  'React', 'Next.js', 'TypeScript', 'Tailwind', 'Node.js',
-  'Figma', 'GSAP', 'Three.js', 'MongoDB', 'PostgreSQL',
+  'React JS', 'Node JS', 'Express', 'MongoDB', 'Cloudinary',
+  'Razorpay API', 'Google Auth', 'WordPress', 'AI Tools', 'Figma',
 ];
 
 const SkillBar = ({ name, level, cat, i }) => {
@@ -130,10 +130,7 @@ const Skills = () => {
                 marginBottom: '3rem',
               }}
             >
-              I'm a passionate web developer with over 3 years of experience
-              creating modern, immersive web applications. I specialize in
-              frontend development using cutting-edge technologies to deliver
-              exceptional user experiences.
+              I am a self-motivated developer currently pursuing MCA in AI/ML. With a strong background in full-stack web development and a passion for automation, I specialize in building responsive, feature-rich applications that integrate modern APIs and AI tools.
             </motion.p>
 
             <motion.p

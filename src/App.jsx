@@ -74,7 +74,7 @@ function App() {
 
         <div style={{ maxWidth: '1400px', margin: '0 auto', padding: '0 clamp(1.5rem,5vw,6rem)', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', gap: '2rem' }}>
           {/* Logo */}
-          <span style={{ fontFamily: "'Space Grotesk',sans-serif", fontWeight: 800, fontSize: '1.4rem', letterSpacing: '0.12em', textTransform: 'uppercase', background: 'linear-gradient(135deg,#00f0ff,#9b5de5)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>Aryan</span>
+          <span style={{ fontFamily: "'Space Grotesk',sans-serif", fontWeight: 800, fontSize: '1.4rem', letterSpacing: '0.12em', textTransform: 'uppercase', background: 'linear-gradient(135deg,#00f0ff,#9b5de5)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>Aryan Verma</span>
 
           <p style={{ color: 'rgba(255,255,255,0.25)', fontSize: '0.85rem', lineHeight: 1.7, maxWidth: '380px' }}>
             Built with React, Vite &amp; Framer Motion.
@@ -82,8 +82,12 @@ function App() {
           </p>
 
           <div style={{ display: 'flex', gap: '2rem', flexWrap: 'wrap', justifyContent: 'center' }}>
-            {['GitHub','LinkedIn','Twitter','Dribbble'].map(link => (
-              <a key={link} href="#" style={{ color: 'rgba(255,255,255,0.25)', fontSize: '0.75rem', fontWeight: 500, letterSpacing: '0.08em', textDecoration: 'none', transition: 'color 0.3s ease', cursor: 'none' }}
+            {['GitHub','LinkedIn','Twitter','Email'].map(link => (
+              <a key={link} href={
+                link === 'GitHub' ? 'https://github.com/Aryan1274' : 
+                link === 'LinkedIn' ? 'https://www.linkedin.com/in/aryan-verma-2b9a92279' : 
+                link === 'Email' ? 'mailto:aryan12verma2004@gmail.com' : '#'
+              } target="_blank" rel="noopener noreferrer" style={{ color: 'rgba(255,255,255,0.25)', fontSize: '0.75rem', fontWeight: 500, letterSpacing: '0.08em', textDecoration: 'none', transition: 'color 0.3s ease', cursor: 'none' }}
                 onMouseEnter={e => e.target.style.color = '#00f0ff'}
                 onMouseLeave={e => e.target.style.color = 'rgba(255,255,255,0.25)'}>
                 {link}
@@ -92,8 +96,9 @@ function App() {
           </div>
 
           <p style={{ fontSize: '0.65rem', color: 'rgba(255,255,255,0.12)', letterSpacing: '0.2em', textTransform: 'uppercase' }}>
-            &copy; 2026 Aryan. All rights reserved.
+            &copy; 2026 Aryan Verma. All rights reserved.
           </p>
+
         </div>
       </footer>
     </div>

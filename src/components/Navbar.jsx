@@ -97,7 +97,7 @@ const Navbar = () => {
             background: 'linear-gradient(135deg, #00f0ff, #9b5de5)',
             WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text',
           }}>
-            Aryan
+            Aryan Verma
           </span>
         </a>
 

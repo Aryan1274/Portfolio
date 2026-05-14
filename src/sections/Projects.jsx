@@ -3,30 +3,31 @@ import { motion, useMotionValue, useTransform, useSpring } from 'framer-motion';
 
 const projects = [
   {
-    title: 'Modern E-Commerce Platform',
-    category: 'Full Stack Development',
-    tags: ['React', 'Next.js', 'Node.js', 'Tailwind'],
+    title: 'ARVR Store',
+    category: 'E-commerce Platform',
+    tags: ['React JS', 'Node JS', 'MongoDB', 'Razorpay'],
     image: 'https://images.unsplash.com/photo-1557821552-17105176677c?auto=format&fit=crop&q=80&w=1600',
-    link: '#',
+    link: 'https://arvr-store.vercel.app/',
     color: '#00f0ff',
   },
   {
-    title: 'Task Management App',
-    category: 'Product Design',
-    tags: ['React', 'Framer Motion', 'Supabase'],
+    title: 'Noto Battery',
+    category: 'Business & E-commerce',
+    tags: ['React', 'Express', 'Cloudinary', 'Google Auth'],
     image: 'https://images.unsplash.com/photo-1540350394557-8d14678e7f91?auto=format&fit=crop&q=80&w=1600',
-    link: '#',
+    link: 'https://noto-battery.vercel.app/',
     color: '#9b5de5',
   },
   {
-    title: 'Weather Dashboard',
-    category: 'Web Application',
-    tags: ['React', 'API Integration', 'Charts'],
+    title: 'Bolo Blush',
+    category: 'Communication App',
+    tags: ['React', 'Node JS', 'Socket.io', 'Atlas'],
     image: 'https://images.unsplash.com/photo-1592210454359-9043f067919b?auto=format&fit=crop&q=80&w=1600',
-    link: '#',
+    link: 'https://bolo-blush.vercel.app/',
     color: '#00ff87',
   },
 ];
+
 
 /* 3-D tilt on hover */
 const TiltCard = ({ children, color, floatDelay }) => {
