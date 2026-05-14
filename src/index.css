@@ -160,6 +160,15 @@ body::before {
   border: 1px solid var(--accent-cyan);
 }
 
+.cursor-ring.reveal {
+  width: 240px;
+  height: 240px;
+  background: transparent;
+  border: 2px solid var(--accent-cyan);
+  box-shadow: 0 0 40px rgba(0, 240, 255, 0.2);
+}
+
+
 
 /* ============================================
    TYPOGRAPHY SYSTEM
@@ -750,16 +759,34 @@ a, button, input, textarea { cursor: none !important; }
 }
 
 .hero-img {
-  width: 150%;
-  height: 190%;
+  width: 200%;
+  height: 200%;
   object-fit: cover;
-  object-position: center 75%;
+  object-position: center 85%;
   filter: brightness(1.1) contrast(1.1) saturate(1.1);
   mix-blend-mode: normal;
 }
 
 
 
+
+.hero-img-reveal {
+  position: absolute;
+  inset: 0;
+  width: 260%;
+  height: 260%;
+  object-fit: cover;
+  object-position: center 90%;
+  mask-image: radial-gradient(circle at var(--mx, 50%) var(--my, 50%), black 100px, transparent 110px);
+  -webkit-mask-image: radial-gradient(circle at var(--mx, 50%) var(--my, 50%), black 100px, transparent 110px);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.image-frame:hover .hero-img-reveal {
+  opacity: 1;
+}
 
 .image-overlay {
   position: absolute;

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { motion, useMotionValue, useTransform } from 'framer-motion';
-import heroImg from '../assets/my-img1crop.jpg';
+import heroImg from '../assets/my-img2crop.jpg';
+import revealImg from '../assets/my-img1.jpg';
 
 const roles = ['Full Stack Developer', 'UI Designer', 'Programmer', 'Vibe Coder'];
 const greetingWords = ["Hey\u{1F44B},", "I'm"];
@@ -164,8 +165,19 @@ const Hero = () => {
             {/* Floating + parallax image wrapper */}
             <motion.div style={{ x: imgParX, y: imgParY, position: 'relative', zIndex: 1 }} animate={{ y: [0, -18, 0] }} transition={{ duration: 4.5, repeat: Infinity, ease: 'easeInOut' }}>
               {/* Blob-shaped frame */}
-              <div className="image-frame glass">
+              <div 
+                className="image-frame glass"
+                data-hover="reveal"
+                onMouseMove={(e) => {
+                  const rect = e.currentTarget.getBoundingClientRect();
+                  const x = e.clientX - rect.left;
+                  const y = e.clientY - rect.top;
+                  e.currentTarget.style.setProperty('--mx', `${x}px`);
+                  e.currentTarget.style.setProperty('--my', `${y}px`);
+                }}
+              >
                 <img src={heroImg} alt="Aryan Verma" className="hero-img" />
+                <img src={revealImg} alt="Reveal" className="hero-img-reveal" />
                 <div className="image-overlay" />
               </div>
 

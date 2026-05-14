@@ -26,8 +26,9 @@ const CustomCursor = () => {
       const target = e.target;
       const interactable = !!target.closest('a, button, input, textarea, [data-hover]');
       const spotlight = !!target.closest('.nav-link-spotlight');
+      const reveal = !!target.closest('[data-hover="reveal"]');
 
-      isHovering.current = interactable;
+      isHovering.current = interactable || reveal;
 
       if (interactable) {
         ring.classList.add('hover');
@@ -40,14 +41,21 @@ const CustomCursor = () => {
       } else {
         ring.classList.remove('spotlight');
       }
+
+      if (reveal) {
+        ring.classList.add('reveal');
+      } else {
+        ring.classList.remove('reveal');
+      }
     };
 
     const animate = () => {
       const { x, y } = mouseCoords.current;
-      const size = isHovering.current ? 90 : 36;
+      const ringSize = ring.classList.contains('reveal') ? 240 : (isHovering.current ? 90 : 36);
       
-      ringCoords.current.x += (x - ringCoords.current.x - size / 2) * 0.15;
-      ringCoords.current.y += (y - ringCoords.current.y - size / 2) * 0.15;
+      ringCoords.current.x += (x - ringCoords.current.x - ringSize / 2) * 0.15;
+      ringCoords.current.y += (y - ringCoords.current.y - ringSize / 2) * 0.15;
+
       
       ring.style.transform = `translate(${ringCoords.current.x}px, ${ringCoords.current.y}px)`;
       animId.current = requestAnimationFrame(animate);
