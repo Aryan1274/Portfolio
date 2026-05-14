@@ -1,6 +1,8 @@
 import React, { useRef } from 'react';
 import { motion, useMotionValue, useTransform, useSpring } from 'framer-motion';
 
+import notoPreview from '../assets/noto-preview.png';
+
 const projects = [
   {
     title: 'ARVR Store',
@@ -14,10 +16,11 @@ const projects = [
     title: 'Noto Battery',
     category: 'Business & E-commerce',
     tags: ['React', 'Express', 'Cloudinary', 'Google Auth'],
-    image: 'https://image.thum.io/get/width/1200/crop/800/https://noto-battery.vercel.app/',
+    image: notoPreview,
     link: 'https://noto-battery.vercel.app/',
     color: '#9b5de5',
   },
+
   {
     title: 'Bolo Blush',
     category: 'Communication App',
