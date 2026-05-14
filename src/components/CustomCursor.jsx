@@ -44,8 +44,10 @@ const CustomCursor = () => {
 
       if (reveal) {
         ring.classList.add('reveal');
+        dot.classList.add('reveal');
       } else {
         ring.classList.remove('reveal');
+        dot.classList.remove('reveal');
       }
     };
 

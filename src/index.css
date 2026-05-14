@@ -166,7 +166,14 @@ body::before {
   background: transparent;
   border: 2px solid var(--accent-cyan);
   box-shadow: 0 0 40px rgba(0, 240, 255, 0.2);
+  mix-blend-mode: normal !important;
 }
+
+/* Hide dot during reveal to prevent the "strange filter" look */
+.cursor-dot.reveal {
+  opacity: 0;
+}
+
 
 
 
