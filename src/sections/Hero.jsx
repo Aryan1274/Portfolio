@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { motion, useMotionValue, useTransform } from 'framer-motion';
 import heroImg from '../assets/my-img2crop.jpg';
-import revealImg from '../assets/my-img1.jpg';
+import revealImg from '../assets/ayanakoji2.jpeg';
 
 const roles = ['Full Stack Developer', 'UI Designer', 'Programmer', 'Vibe Coder'];
 const greetingWords = ["Hey\u{1F44B},", "I'm"];
