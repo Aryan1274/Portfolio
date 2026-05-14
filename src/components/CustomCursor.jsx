@@ -5,7 +5,6 @@ const CustomCursor = () => {
   const ringRef = useRef(null);
   const [isHovering, setIsHovering] = useState(false);
   
-  // Use refs for coordinates to persist between effect re-runs
   const mouseCoords = useRef({ x: 0, y: 0 });
   const ringCoords = useRef({ x: 0, y: 0 });
   const animId = useRef(null);
@@ -19,9 +18,12 @@ const CustomCursor = () => {
       mouseCoords.current.x = e.clientX;
       mouseCoords.current.y = e.clientY;
       
+      // Update global CSS variables for spotlight effect
+      document.documentElement.style.setProperty('--cursor-x', `${e.clientX}px`);
+      document.documentElement.style.setProperty('--cursor-y', `${e.clientY}px`);
+      
       dot.style.transform = `translate(${mouseCoords.current.x - 4}px, ${mouseCoords.current.y - 4}px)`;
       
-      // Dynamic hover detection
       const target = e.target;
       const isInteractable = !!target.closest('a, button, input, textarea, [data-hover]');
       if (isInteractable !== isHovering) {
@@ -31,7 +33,7 @@ const CustomCursor = () => {
 
     const animate = () => {
       const { x, y } = mouseCoords.current;
-      const size = isHovering ? 80 : 36;
+      const size = isHovering ? 90 : 36;
       
       ringCoords.current.x += (x - ringCoords.current.x - size / 2) * 0.15;
       ringCoords.current.y += (y - ringCoords.current.y - size / 2) * 0.15;
@@ -47,7 +49,7 @@ const CustomCursor = () => {
       window.removeEventListener('mousemove', onMouseMove);
       cancelAnimationFrame(animId.current);
     };
-  }, [isHovering]); // isHovering dependency is fine now because coords are in refs
+  }, [isHovering]);
 
   return (
     <>
