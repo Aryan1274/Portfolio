@@ -11,34 +11,30 @@ const navLinks = [
 ];
 
 const NavLink = ({ link, index, onClick, isMobile = false }) => {
-  const linkRef = useRef(null);
+  const spotlightRef = useRef(null);
   
   const handleMouseMove = (e) => {
-    if (!linkRef.current) return;
-    const rect = linkRef.current.getBoundingClientRect();
+    if (!spotlightRef.current) return;
+    const rect = spotlightRef.current.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
-    linkRef.current.style.setProperty('--lx', `${x}px`);
-    linkRef.current.style.setProperty('--ly', `${y}px`);
+    spotlightRef.current.style.setProperty('--lx', `${x}px`);
+    spotlightRef.current.style.setProperty('--ly', `${y}px`);
   };
 
-  const style = isMobile ? {
+  const aStyle = isMobile ? {
     fontSize: '2.5rem', fontWeight: 800, color: '#fff',
     textDecoration: 'none', fontFamily: "'Space Grotesk', sans-serif",
-    letterSpacing: '-0.02em', position: 'relative'
+    letterSpacing: '-0.02em', display: 'flex', alignItems: 'center'
   } : {
     color: 'rgba(255,255,255,0.4)', textDecoration: 'none',
     fontSize: '0.75rem', fontWeight: 500, letterSpacing: '0.12em',
-    textTransform: 'uppercase', transition: 'color 0.3s ease', cursor: 'none',
-    position: 'relative'
+    textTransform: 'uppercase', transition: 'color 0.3s ease', cursor: 'none'
   };
 
   return (
     <motion.a
-      ref={linkRef}
       href={link.href}
-      className={`nav-link-spotlight ${isMobile ? 'mobile-nav-item' : ''}`}
-      data-text={link.label}
       onMouseMove={handleMouseMove}
       onClick={onClick}
       {...(isMobile ? {
@@ -46,10 +42,17 @@ const NavLink = ({ link, index, onClick, isMobile = false }) => {
         animate: { opacity: 1, y: 0 },
         transition: { delay: index * 0.1 }
       } : {})}
-      style={style}
+      style={aStyle}
     >
-      {isMobile && <span style={{ color: 'rgba(255,255,255,0.1)', marginRight: '1rem' }}>0{index + 1}</span>}
-      {link.label}
+      {isMobile && <span style={{ color: 'rgba(255,255,255,0.1)', marginRight: '1rem', flexShrink: 0 }}>0{index + 1}</span>}
+      <span 
+        ref={spotlightRef}
+        className="nav-link-spotlight"
+        data-text={link.label}
+        style={{ position: 'relative', display: 'inline-block' }}
+      >
+        {link.label}
+      </span>
     </motion.a>
   );
 };

@@ -907,12 +907,11 @@ button { cursor: none; }
   color: #ff0f00; /* Red */
   pointer-events: none;
   z-index: 1;
-  /* Local clip-path relative to element */
+  /* Local clip-path relative to text span */
   clip-path: circle(50px at var(--lx) var(--ly));
   /* Ensure text alignment is identical */
-  display: inherit;
-  align-items: inherit;
-  justify-content: inherit;
+  display: flex;
+  align-items: center;
   text-transform: inherit;
   letter-spacing: inherit;
   font-weight: inherit;
@@ -925,10 +924,6 @@ button { cursor: none; }
   opacity: 1;
 }
 
-/* For mobile nav items, use the same logic */
-.mobile-nav-item::after {
-  clip-path: circle(60px at var(--lx) var(--ly)) !important;
-}
 
 
 
