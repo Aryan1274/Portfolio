@@ -18,31 +18,19 @@ const CustomCursor = () => {
       mouseX = e.clientX;
       mouseY = e.clientY;
       dot.style.transform = `translate(${mouseX - 4}px, ${mouseY - 4}px)`;
+      
+      // Dynamic hover detection via event delegation/target checking
+      const target = e.target;
+      const isInteractable = target.closest('a, button, input, textarea, [data-hover]');
+      setIsHovering(!!isInteractable);
     };
 
     const animate = () => {
-      ringX += (mouseX - ringX - 18) * 0.12;
-      ringY += (mouseY - ringY - 18) * 0.12;
+      ringX += (mouseX - ringX - (isHovering ? 40 : 18)) * 0.12;
+      ringY += (mouseY - ringY - (isHovering ? 40 : 18)) * 0.12;
       ring.style.transform = `translate(${ringX}px, ${ringY}px)`;
       animId = requestAnimationFrame(animate);
     };
-
-    const onMouseEnterLink = () => {
-      setIsHovering(true);
-      dot.style.opacity = '0';
-      dot.style.transform += ' scale(0)';
-    };
-
-    const onMouseLeaveLink = () => {
-      setIsHovering(false);
-      dot.style.opacity = '1';
-    };
-
-    const interactables = document.querySelectorAll('a, button, input, textarea, [data-hover]');
-    interactables.forEach(el => {
-      el.addEventListener('mouseenter', onMouseEnterLink);
-      el.addEventListener('mouseleave', onMouseLeaveLink);
-    });
 
     window.addEventListener('mousemove', onMouseMove);
     animId = requestAnimationFrame(animate);
@@ -50,12 +38,8 @@ const CustomCursor = () => {
     return () => {
       window.removeEventListener('mousemove', onMouseMove);
       cancelAnimationFrame(animId);
-      interactables.forEach(el => {
-        el.removeEventListener('mouseenter', onMouseEnterLink);
-        el.removeEventListener('mouseleave', onMouseLeaveLink);
-      });
     };
-  }, []);
+  }, [isHovering]);
 
   return (
     <>
@@ -66,4 +50,3 @@ const CustomCursor = () => {
 };
 
 export default CustomCursor;
-
