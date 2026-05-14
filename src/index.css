@@ -751,12 +751,14 @@ a, button, input, textarea { cursor: none !important; }
 
 .hero-img {
   width: 150%;
-  height: 150%;
+  height: 190%;
   object-fit: cover;
-  object-position: center 15%;
-  filter: brightness(1.05) contrast(1.15) saturate(1.1);
+  object-position: center 75%;
+  filter: brightness(1.1) contrast(1.1) saturate(1.1);
   mix-blend-mode: normal;
 }
+
+
 
 
 .image-overlay {
