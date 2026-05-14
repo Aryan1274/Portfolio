@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const navLinks = [
@@ -9,6 +9,50 @@ const navLinks = [
   { label: 'Blog', href: '#blog' },
   { label: 'Contact', href: '#contact' },
 ];
+
+const NavLink = ({ link, index, onClick, isMobile = false }) => {
+  const linkRef = useRef(null);
+  
+  const handleMouseMove = (e) => {
+    if (!linkRef.current) return;
+    const rect = linkRef.current.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    linkRef.current.style.setProperty('--lx', `${x}px`);
+    linkRef.current.style.setProperty('--ly', `${y}px`);
+  };
+
+  const style = isMobile ? {
+    fontSize: '2.5rem', fontWeight: 800, color: '#fff',
+    textDecoration: 'none', fontFamily: "'Space Grotesk', sans-serif",
+    letterSpacing: '-0.02em', position: 'relative'
+  } : {
+    color: 'rgba(255,255,255,0.4)', textDecoration: 'none',
+    fontSize: '0.75rem', fontWeight: 500, letterSpacing: '0.12em',
+    textTransform: 'uppercase', transition: 'color 0.3s ease', cursor: 'none',
+    position: 'relative'
+  };
+
+  return (
+    <motion.a
+      ref={linkRef}
+      href={link.href}
+      className={`nav-link-spotlight ${isMobile ? 'mobile-nav-item' : ''}`}
+      data-text={link.label}
+      onMouseMove={handleMouseMove}
+      onClick={onClick}
+      {...(isMobile ? {
+        initial: { opacity: 0, y: 20 },
+        animate: { opacity: 1, y: 0 },
+        transition: { delay: index * 0.1 }
+      } : {})}
+      style={style}
+    >
+      {isMobile && <span style={{ color: 'rgba(255,255,255,0.1)', marginRight: '1rem' }}>0{index + 1}</span>}
+      {link.label}
+    </motion.a>
+  );
+};
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -27,7 +71,6 @@ const Navbar = () => {
 
   return (
     <>
-      {/* Top Bar */}
       <motion.header
         initial={{ y: -80, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
@@ -56,20 +99,8 @@ const Navbar = () => {
 
         {/* Desktop Nav */}
         <nav className="desktop-only" style={{ display: 'flex', gap: '2.5rem', alignItems: 'center' }}>
-          {navLinks.map((link) => (
-            <a
-              key={link.label}
-              href={link.href}
-              className="nav-link-spotlight"
-              data-text={link.label}
-              style={{
-                color: 'rgba(255,255,255,0.4)', textDecoration: 'none',
-                fontSize: '0.75rem', fontWeight: 500, letterSpacing: '0.12em',
-                textTransform: 'uppercase', transition: 'color 0.3s ease', cursor: 'none',
-              }}
-            >
-              {link.label}
-            </a>
+          {navLinks.map((link, i) => (
+            <NavLink key={link.label} link={link} index={i} />
           ))}
           <a href="#contact" className="btn-hire" style={{
               display: 'inline-flex', alignItems: 'center', gap: '0.5rem',
@@ -90,7 +121,6 @@ const Navbar = () => {
         </button>
       </motion.header>
 
-      {/* Mobile Menu */}
       <AnimatePresence>
         {menuOpen && (
           <motion.div
@@ -108,24 +138,7 @@ const Navbar = () => {
           >
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
               {navLinks.map((link, i) => (
-                <motion.a
-                  key={link.label}
-                  href={link.href}
-                  className="nav-link-spotlight mobile-nav-item"
-                  data-text={link.label}
-                  onClick={() => setMenuOpen(false)}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: i * 0.1 }}
-                  style={{
-                    fontSize: '2.5rem', fontWeight: 800, color: '#fff',
-                    textDecoration: 'none', fontFamily: "'Space Grotesk', sans-serif",
-                    letterSpacing: '-0.02em', position: 'relative'
-                  }}
-                >
-                  <span style={{ color: 'rgba(255,255,255,0.1)', marginRight: '1rem' }}>0{i+1}</span>
-                  {link.label}
-                </motion.a>
+                <NavLink key={link.label} link={link} index={i} isMobile={true} onClick={() => setMenuOpen(false)} />
               ))}
             </div>
             

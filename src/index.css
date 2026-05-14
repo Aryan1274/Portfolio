@@ -907,8 +907,8 @@ button { cursor: none; }
   color: #ff0f00; /* Red */
   pointer-events: none;
   z-index: 1;
-  /* Fixed clip-path relative to viewport */
-  clip-path: circle(45px at var(--cursor-x) var(--cursor-y));
+  /* Local clip-path relative to element */
+  clip-path: circle(50px at var(--lx) var(--ly));
   /* Ensure text alignment is identical */
   display: inherit;
   align-items: inherit;
@@ -925,21 +925,10 @@ button { cursor: none; }
   opacity: 1;
 }
 
-/* Special alignment for mobile nav items since they are large and centered */
+/* For mobile nav items, use the same logic */
 .mobile-nav-item::after {
-  position: absolute; /* Relative to the individual link container */
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  /* We need a slightly different approach for absolute positioning with global vars */
-  /* The global --cursor-x/y are viewport relative, so we use a mask-image trick */
-  mask-image: radial-gradient(circle 45px at var(--cursor-x) var(--cursor-y), black 100%, transparent 100%);
-  mask-repeat: no-repeat;
-  mask-composite: source-in;
-  -webkit-mask-image: radial-gradient(circle 45px at var(--cursor-x) var(--cursor-y), black 100%, transparent 100%);
+  clip-path: circle(60px at var(--lx) var(--ly)) !important;
 }
+
 
 
