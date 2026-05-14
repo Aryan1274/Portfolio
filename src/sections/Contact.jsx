@@ -111,11 +111,27 @@ const Contact = () => {
     }
 
     setSubmitting(true);
-    // Simulate API call
-    setTimeout(() => {
-      setSubmitting(false);
-      setSubmitted(true);
-    }, 1500);
+    
+    // Netlify AJAX submission
+    const formData = new FormData();
+    Object.keys(form).forEach(key => {
+      formData.append(key, form[key]);
+    });
+    formData.append('form-name', 'contact');
+
+    fetch("/", {
+      method: "POST",
+      body: formData,
+    })
+      .then(() => {
+        setSubmitting(false);
+        setSubmitted(true);
+      })
+      .catch((error) => {
+        setSubmitting(false);
+        console.error("Form submission error:", error);
+        alert("Oops! There was an error sending your message. Please try again.");
+      });
   };
 
   return (
@@ -189,7 +205,16 @@ const Contact = () => {
               {submitted && <SuccessOverlay />}
             </AnimatePresence>
 
-            <form onSubmit={handleSubmit} className="space-y-8">
+            <form 
+              name="contact" 
+              method="POST" 
+              data-netlify="true" 
+              onSubmit={handleSubmit} 
+              className="space-y-8"
+            >
+              {/* Hidden input for Netlify bot/form detection */}
+              <input type="hidden" name="form-name" value="contact" />
+              
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div className="space-y-2">
                   <label className="text-[10px] font-bold text-[#555] uppercase tracking-[0.2em]">Your Name</label>
@@ -263,6 +288,7 @@ const Contact = () => {
                 )}
               </button>
             </form>
+
           </motion.div>
           
         </div>
