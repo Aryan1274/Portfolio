@@ -140,7 +140,11 @@ body::before {
   pointer-events: none;
   z-index: 99998;
   mix-blend-mode: difference;
-  transition: width 0.4s cubic-bezier(0.23, 1, 0.32, 1), height 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+  transition: 
+    width 0.4s cubic-bezier(0.23, 1, 0.32, 1), 
+    height 0.4s cubic-bezier(0.23, 1, 0.32, 1),
+    background-color 0.2s ease,
+    border-color 0.2s ease;
 }
 
 .cursor-ring.hover {
@@ -150,11 +154,12 @@ body::before {
   border-color: transparent;
 }
 
-/* Transparent cursor for navbar spotlight links */
-body:has(.nav-link-spotlight:hover) .cursor-ring.hover {
+/* Transparent cursor for navbar spotlight links - now using class from React state */
+.cursor-ring.hover.spotlight {
   background: transparent !important;
   border: 1px solid var(--accent-cyan);
 }
+
 
 /* ============================================
    TYPOGRAPHY SYSTEM

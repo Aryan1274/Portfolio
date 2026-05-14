@@ -4,6 +4,7 @@ const CustomCursor = () => {
   const dotRef = useRef(null);
   const ringRef = useRef(null);
   const [isHovering, setIsHovering] = useState(false);
+  const [isSpotlight, setIsSpotlight] = useState(false);
   
   const mouseCoords = useRef({ x: 0, y: 0 });
   const ringCoords = useRef({ x: 0, y: 0 });
@@ -26,8 +27,13 @@ const CustomCursor = () => {
       
       const target = e.target;
       const isInteractable = !!target.closest('a, button, input, textarea, [data-hover]');
+      const isSpotlightTarget = !!target.closest('.nav-link-spotlight');
+
       if (isInteractable !== isHovering) {
         setIsHovering(isInteractable);
+      }
+      if (isSpotlightTarget !== isSpotlight) {
+        setIsSpotlight(isSpotlightTarget);
       }
     };
 
@@ -49,14 +55,15 @@ const CustomCursor = () => {
       window.removeEventListener('mousemove', onMouseMove);
       cancelAnimationFrame(animId.current);
     };
-  }, [isHovering]);
+  }, [isHovering, isSpotlight]);
 
   return (
     <>
       <div ref={dotRef} className="cursor-dot" />
-      <div ref={ringRef} className={`cursor-ring ${isHovering ? 'hover' : ''}`} />
+      <div ref={ringRef} className={`cursor-ring ${isHovering ? 'hover' : ''} ${isSpotlight ? 'spotlight' : ''}`} />
     </>
   );
 };
 
 export default CustomCursor;
+

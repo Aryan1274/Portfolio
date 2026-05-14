@@ -29,7 +29,8 @@ const NavLink = ({ link, index, onClick, isMobile = false }) => {
   } : {
     color: 'rgba(255,255,255,0.4)', textDecoration: 'none',
     fontSize: '0.75rem', fontWeight: 500, letterSpacing: '0.12em',
-    textTransform: 'uppercase', transition: 'color 0.3s ease', cursor: 'none'
+    textTransform: 'uppercase', transition: 'color 0.3s ease', cursor: 'none',
+    padding: '0.5rem 1.25rem'
   };
 
   return (
@@ -101,17 +102,19 @@ const Navbar = () => {
         </a>
 
         {/* Desktop Nav */}
-        <nav className="desktop-only" style={{ display: 'flex', gap: '2.5rem', alignItems: 'center' }}>
+        <nav className="desktop-only" style={{ display: 'flex', gap: '0', alignItems: 'center' }}>
           {navLinks.map((link, i) => (
             <NavLink key={link.label} link={link} index={i} />
           ))}
           <a href="#contact" className="btn-hire" style={{
+              marginLeft: '1.25rem',
               display: 'inline-flex', alignItems: 'center', gap: '0.5rem',
               padding: '0.6rem 1.5rem', border: '1px solid rgba(0, 240, 255, 0.3)',
               borderRadius: '100px', color: '#00f0ff', textDecoration: 'none',
               fontSize: '0.75rem', fontWeight: 600, letterSpacing: '0.1em',
               textTransform: 'uppercase', transition: 'all 0.3s ease', cursor: 'none',
             }}>
+
             Hire Me
           </a>
         </nav>
