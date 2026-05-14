@@ -4,42 +4,50 @@ const CustomCursor = () => {
   const dotRef = useRef(null);
   const ringRef = useRef(null);
   const [isHovering, setIsHovering] = useState(false);
+  
+  // Use refs for coordinates to persist between effect re-runs
+  const mouseCoords = useRef({ x: 0, y: 0 });
+  const ringCoords = useRef({ x: 0, y: 0 });
+  const animId = useRef(null);
 
   useEffect(() => {
     const dot = dotRef.current;
     const ring = ringRef.current;
     if (!dot || !ring) return;
 
-    let mouseX = 0, mouseY = 0;
-    let ringX = 0, ringY = 0;
-    let animId;
-
     const onMouseMove = (e) => {
-      mouseX = e.clientX;
-      mouseY = e.clientY;
-      dot.style.transform = `translate(${mouseX - 4}px, ${mouseY - 4}px)`;
+      mouseCoords.current.x = e.clientX;
+      mouseCoords.current.y = e.clientY;
       
-      // Dynamic hover detection via event delegation/target checking
+      dot.style.transform = `translate(${mouseCoords.current.x - 4}px, ${mouseCoords.current.y - 4}px)`;
+      
+      // Dynamic hover detection
       const target = e.target;
-      const isInteractable = target.closest('a, button, input, textarea, [data-hover]');
-      setIsHovering(!!isInteractable);
+      const isInteractable = !!target.closest('a, button, input, textarea, [data-hover]');
+      if (isInteractable !== isHovering) {
+        setIsHovering(isInteractable);
+      }
     };
 
     const animate = () => {
-      ringX += (mouseX - ringX - (isHovering ? 40 : 18)) * 0.12;
-      ringY += (mouseY - ringY - (isHovering ? 40 : 18)) * 0.12;
-      ring.style.transform = `translate(${ringX}px, ${ringY}px)`;
-      animId = requestAnimationFrame(animate);
+      const { x, y } = mouseCoords.current;
+      const size = isHovering ? 80 : 36;
+      
+      ringCoords.current.x += (x - ringCoords.current.x - size / 2) * 0.15;
+      ringCoords.current.y += (y - ringCoords.current.y - size / 2) * 0.15;
+      
+      ring.style.transform = `translate(${ringCoords.current.x}px, ${ringCoords.current.y}px)`;
+      animId.current = requestAnimationFrame(animate);
     };
 
     window.addEventListener('mousemove', onMouseMove);
-    animId = requestAnimationFrame(animate);
+    animId.current = requestAnimationFrame(animate);
 
     return () => {
       window.removeEventListener('mousemove', onMouseMove);
-      cancelAnimationFrame(animId);
+      cancelAnimationFrame(animId.current);
     };
-  }, [isHovering]);
+  }, [isHovering]); // isHovering dependency is fine now because coords are in refs
 
   return (
     <>

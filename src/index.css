@@ -140,13 +140,13 @@ body::before {
   pointer-events: none;
   z-index: 99998;
   mix-blend-mode: difference;
-  transition: width 0.4s cubic-bezier(0.23, 1, 0.32, 1), height 0.4s cubic-bezier(0.23, 1, 0.32, 1), background 0.4s ease;
+  transition: width 0.4s cubic-bezier(0.23, 1, 0.32, 1), height 0.4s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
 .cursor-ring.hover {
-  width: 80px;
-  height: 80px;
-  background: var(--accent-cyan);
+  width: 90px;
+  height: 90px;
+  background: radial-gradient(circle, var(--accent-cyan) 0%, rgba(0, 240, 255, 0.2) 60%, transparent 100%);
   border-color: transparent;
 }
 
