@@ -47,7 +47,6 @@ function App() {
 
   return (
     <div className="relative min-h-screen selection:bg-purple-500/30">
-      <CustomCursor />
       <Background />
       <Navbar />
       
@@ -65,6 +64,9 @@ function App() {
         <Blog />
         <Contact />
       </main>
+
+      <CustomCursor />
+
 
       <footer style={{ padding: '5rem 0 3rem', background: 'var(--bg-secondary)', position: 'relative', overflow: 'hidden' }}>
         {/* Top glow line */}

@@ -259,6 +259,7 @@ body::before {
   background: linear-gradient(135deg, rgba(0, 240, 255, 0.03), transparent);
   opacity: 0;
   transition: opacity 0.5s ease;
+  pointer-events: none;
 }
 
 .card:hover {
@@ -290,6 +291,7 @@ body::before {
   position: relative;
   overflow: hidden;
 }
+
 
 .btn-primary::before {
   content: '';
@@ -463,8 +465,8 @@ html.lenis { height: auto; }
 /* ============================================
    UTILITY OVERRIDES
    ============================================ */
-a { cursor: none; }
-button { cursor: none; }
+a, button, input, textarea { cursor: none !important; }
+
 
 /* ============================================
    SHIMMER SWEEP — Project & Blog Cards

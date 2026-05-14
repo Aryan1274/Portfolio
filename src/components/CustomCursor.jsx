@@ -1,14 +1,12 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 
 const CustomCursor = () => {
   const dotRef = useRef(null);
   const ringRef = useRef(null);
-  const [isHovering, setIsHovering] = useState(false);
-  const [isSpotlight, setIsSpotlight] = useState(false);
-  
   const mouseCoords = useRef({ x: 0, y: 0 });
   const ringCoords = useRef({ x: 0, y: 0 });
   const animId = useRef(null);
+  const isHovering = useRef(false);
 
   useEffect(() => {
     const dot = dotRef.current;
@@ -23,23 +21,30 @@ const CustomCursor = () => {
       document.documentElement.style.setProperty('--cursor-x', `${e.clientX}px`);
       document.documentElement.style.setProperty('--cursor-y', `${e.clientY}px`);
       
-      dot.style.transform = `translate(${mouseCoords.current.x - 4}px, ${mouseCoords.current.y - 4}px)`;
+      dot.style.transform = `translate(${e.clientX - 4}px, ${e.clientY - 4}px)`;
       
       const target = e.target;
-      const isInteractable = !!target.closest('a, button, input, textarea, [data-hover]');
-      const isSpotlightTarget = !!target.closest('.nav-link-spotlight');
+      const interactable = !!target.closest('a, button, input, textarea, [data-hover]');
+      const spotlight = !!target.closest('.nav-link-spotlight');
 
-      if (isInteractable !== isHovering) {
-        setIsHovering(isInteractable);
+      isHovering.current = interactable;
+
+      if (interactable) {
+        ring.classList.add('hover');
+      } else {
+        ring.classList.remove('hover');
       }
-      if (isSpotlightTarget !== isSpotlight) {
-        setIsSpotlight(isSpotlightTarget);
+
+      if (spotlight) {
+        ring.classList.add('spotlight');
+      } else {
+        ring.classList.remove('spotlight');
       }
     };
 
     const animate = () => {
       const { x, y } = mouseCoords.current;
-      const size = isHovering ? 90 : 36;
+      const size = isHovering.current ? 90 : 36;
       
       ringCoords.current.x += (x - ringCoords.current.x - size / 2) * 0.15;
       ringCoords.current.y += (y - ringCoords.current.y - size / 2) * 0.15;
@@ -55,15 +60,16 @@ const CustomCursor = () => {
       window.removeEventListener('mousemove', onMouseMove);
       cancelAnimationFrame(animId.current);
     };
-  }, [isHovering, isSpotlight]);
+  }, []);
 
   return (
     <>
-      <div ref={dotRef} className="cursor-dot" />
-      <div ref={ringRef} className={`cursor-ring ${isHovering ? 'hover' : ''} ${isSpotlight ? 'spotlight' : ''}`} />
+      <div ref={dotRef} className="cursor-dot" style={{ pointerEvents: 'none' }} />
+      <div ref={ringRef} className="cursor-ring" style={{ pointerEvents: 'none' }} />
     </>
   );
 };
 
 export default CustomCursor;
+
 
