@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import resumeFile from '../assets/Aryan-resume.pdf';
 
 const fadeUp = {
   hidden: { opacity: 0, y: 50 },
@@ -124,6 +125,17 @@ const About = () => {
                 </svg>
               </a>
               <a href="#contact" className="btn-outline">Get In Touch</a>
+              <a 
+                href={resumeFile}
+                download="Aryan-resume.pdf"
+                className="btn-outline"
+                style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}
+              >
+                Download CV
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/>
+                </svg>
+              </a>
             </div>
           </motion.div>
         </div>
